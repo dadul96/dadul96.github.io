@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>coding on dadul96 blog</title>
+    <link>https://dadul96.github.io/categories/coding/</link>
+    <description>Recent content in coding on dadul96 blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 19 Feb 2022 16:39:04 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/categories/coding/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo PaperMod: Custom Home-Info</title>
+      <link>https://dadul96.github.io/posts/hugo_papermod_custom_home_info/</link>
+      <pubDate>Sat, 19 Feb 2022 16:39:04 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/posts/hugo_papermod_custom_home_info/</guid>
+      <description>&lt;p&gt;&lt;em&gt;A quick guide on how to customize the Home-Info field of the Hugo PaperMod theme.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
