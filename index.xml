@@ -6,7 +6,16 @@
     <description>Recent content on dadul96 blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Feb 2022 16:39:04 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Feb 2022 14:28:06 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HPL Benchmark on a Raspberry Pi 4B</title>
+      <link>https://dadul96.github.io/posts/hpl_benchmark_on_pi4/</link>
+      <pubDate>Sun, 27 Feb 2022 14:28:06 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/posts/hpl_benchmark_on_pi4/</guid>
+      <description>&lt;p&gt;&lt;em&gt;A guide on how to run the HPL benchmark on a Raspberry Pi 4B. Various Rasbpian OS versions are used (buster, bullseye, 32-bit, 64-bit) and the results are compared.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Hugo PaperMod: Custom Home-Info</title>
       <link>https://dadul96.github.io/posts/hugo_papermod_custom_home_info/</link>
