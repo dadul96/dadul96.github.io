@@ -6,7 +6,16 @@
     <description>Recent content on dadul96 blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Feb 2022 14:28:06 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Aug 2022 18:08:00 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>STM32 USB HID Mouse Jiggler</title>
+      <link>https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/</link>
+      <pubDate>Thu, 18 Aug 2022 18:08:00 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/</guid>
+      <description>&lt;p&gt;&lt;em&gt;An STM32-based USB HID device to periodically shake your mouse pointer.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>HPL Benchmark on a Raspberry Pi 4B</title>
       <link>https://dadul96.github.io/posts/hpl_benchmark_on_pi4/</link>

@@ -6,7 +6,52 @@
     <description>Recent content in Tags on dadul96 blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Feb 2022 14:28:06 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Aug 2022 18:08:00 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>coding</title>
+      <link>https://dadul96.github.io/tags/coding/</link>
+      <pubDate>Thu, 18 Aug 2022 18:08:00 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/tags/coding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>electronics</title>
+      <link>https://dadul96.github.io/tags/electronics/</link>
+      <pubDate>Thu, 18 Aug 2022 18:08:00 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/tags/electronics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>microcontroller</title>
+      <link>https://dadul96.github.io/tags/microcontroller/</link>
+      <pubDate>Thu, 18 Aug 2022 18:08:00 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/tags/microcontroller/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>stm32</title>
+      <link>https://dadul96.github.io/tags/stm32/</link>
+      <pubDate>Thu, 18 Aug 2022 18:08:00 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/tags/stm32/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>usb</title>
+      <link>https://dadul96.github.io/tags/usb/</link>
+      <pubDate>Thu, 18 Aug 2022 18:08:00 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/tags/usb/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>benchmark</title>
       <link>https://dadul96.github.io/tags/benchmark/</link>
@@ -31,15 +76,6 @@
       <pubDate>Sat, 19 Feb 2022 16:39:04 +0100</pubDate>
       
       <guid>https://dadul96.github.io/tags/blog/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>coding</title>
-      <link>https://dadul96.github.io/tags/coding/</link>
-      <pubDate>Sat, 19 Feb 2022 16:39:04 +0100</pubDate>
-      
-      <guid>https://dadul96.github.io/tags/coding/</guid>
       <description></description>
     </item>
     

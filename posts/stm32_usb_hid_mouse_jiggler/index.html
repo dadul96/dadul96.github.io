@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>STM32 USB HID Mouse Jiggler | dadul96 blog</title>
+<meta name="keywords" content="microcontroller, stm32, usb, coding, electronics" />
+<meta name="description" content="An STM32-based USB HID device to periodically shake your mouse pointer.">
+<meta name="author" content="dadul96">
+<link rel="canonical" href="https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://dadul96.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://dadul96.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://dadul96.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://dadul96.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://dadul96.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.92.1" />
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="STM32 USB HID Mouse Jiggler" />
+<meta property="og:description" content="An STM32-based USB HID device to periodically shake your mouse pointer." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/" />
+<meta property="og:image" content="https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/images/mouse_jiggler.webp" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-18T18:08:00&#43;01:00" />
+<meta property="article:modified_time" content="2022-08-18T18:08:00&#43;01:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/images/mouse_jiggler.webp" />
+<meta name="twitter:title" content="STM32 USB HID Mouse Jiggler"/>
+<meta name="twitter:description" content="An STM32-based USB HID device to periodically shake your mouse pointer."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://dadul96.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "STM32 USB HID Mouse Jiggler",
+      "item": "https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "STM32 USB HID Mouse Jiggler",
+  "name": "STM32 USB HID Mouse Jiggler",
+  "description": "An STM32-based USB HID device to periodically shake your mouse pointer.\n",
+  "keywords": [
+    "microcontroller", "stm32", "usb", "coding", "electronics"
+  ],
+  "articleBody": "An STM32-based USB HID device to periodically shake your mouse pointer.\nIntroduction Sometimes I would find it useful to have a device that periodically would shake my mouse to prevent a PC from going to standby. Of course, you could always change or deactivate the standby functionality (if your organization allows you to do these changes), but sometimes you just don’t want to fiddle around with these settings. One way of solving this would be to create a mechanical device that physically moves the mouse. However, a much simpler solution is to take an STM32 microcontroller and make use of the in-built USB 2.0 interface. In this article, I will show you how I have implemented exactly this. You can also find this project on GitHub.\nHardware Setup First things first, what microcontroller will be used? In 2011 Leaflabs released their STM32F103CBT6-based development board called Maple Mini. It was discontinued in March 2015, but there are still some manufacturers out there selling Maple Mini clones. A few years back I ordered a couple of them and that’s why I still use this quite exotic development board compared to the more widely known Blue Pill boards.\nIn order to comply with the USB 2.0 full-speed electrical specification, it is also necessary to add a 1k5 Ohm pullup resistor between the USB D+ line (D23 = GPIOA, GPIO12) and VCC (3.0 - 3.6V). This ensures that the host (PC) detects the device on the bus.\n\r\rSource: ST Application note AN4879\n\r\rThe Maple Mini has the advantage that there is already a 1k5 Ohm resistor onboard which is switchable via a transistor and the signal of the GPIOB9 pin.\n\r\rSource: Maple Mini schematics\n\r\rIDE and Framework Although the Maple Mini has quite good support for the Arduino IDE and Framework, I prefer to use PlatformIO on Visual Studio Code in combination with the open-source ARM Cortex library called libopencm3. In my case, no bootloader is installed on the microcontroller, and therefore an ST-Link Debugger and dfu-util will be used to flash the device.\nImplementation Project Folder Structure When creating a new project in PlatformIO the following folder structure will be created: Since I want to make the USB HID implementation re-useable for future projects, I will put the USB-specific code inside the lib-folder in a separate folder called usb_hid_lib.\nThe main-file is of course placed in the src-folder and contains the function calls of this usb_hid_lib library. usb_hid_lib delay.c The goal is to have a mouse jiggler that periodically moves the mouse pointer. To execute such periodic events it is useful to have some sort of a delay-implementation. This delay-function can then later on also be used inside the USB HID code for the USB_autodetect()-function that will trigger a re-enumeration of the device on the bus. But more on that later.\nIn order to not waste any of the timer/counter modules for the delay, it is a good idea to make use of the 24-bit SysTick timer on the ARM Cortex M3 (STM32F103).\nTherefore the following libopencm3-files need to be included:\n#include #include The delay-function is implemented in the following manner:\nvoid delay_ms(uint32_t milliseconds) { static uint8_t init_done_flag = 0; static uint32_t reload_val = 0; static uint32_t ticks_per_ms = 0; uint32_t num_of_reloads = 0; if (init_done_flag == 0) { /* set SYSCLK to 72MHz using HSE 8MHz oscillator: */ rcc_clock_setup_in_hse_8mhz_out_72mhz(); /* check csr clocksource and set ticks_per_ms accordingly: */ if ((STK_CSR \u0026 STK_CSR_CLKSOURCE) == STK_CSR_CLKSOURCE_AHB) { ticks_per_ms = 72000U; /* 72MHz = 72M ticks/s - divide by 1000 to get ticks/ms */ } else /* == STK_CSR_CLKSOURCE_AHB_DIV8 */ { ticks_per_ms = 72000U / 8U; } /* get reload value or set own one if 0: */ reload_val = systick_get_reload(); if (reload_val == 0) { systick_set_reload(ticks_per_ms); reload_val = ticks_per_ms; } /* enable systick and set init_done_flag: */ systick_counter_enable(); init_done_flag = 1; } while ((num_of_reloads * reload_val)  (milliseconds * ticks_per_ms)) { if (systick_get_countflag()) /* flag gets automatically cleared when read */ { num_of_reloads++; } } } The aim of this implementation is to be flexible/generic with the use of the SysTick timer. In other words, I want this implementation to be somewhat independent of the previous settings that were made to the SysTick timer (in case it was already used and configured in the code before). How is this accomplished?\nThe first thing in the initialization is the setup of the system clock (SYSCLK). Since this code should only be re-usable on other Maple Mini projects, I have assumed that the clock will always make use of the on-board HSE (High-Speed External) 8MHz oscillator and that the CPU clock will always be set to the maximum of 72MHz. This 72MHz CPU clock also fits nicely to the required 48MHz for the USB interface by just using a 1.5 clock divider. Because of this assumption, that in every future project the same clock settings will be used, it does not matter that some clock configuration inside this delay-function might have been already called somewhere else in the code before.\nIn the next step, it is checked whether the SYSCLK clock source (which is coming through the AHB prescaler) has the SysTick divider of 8 selected or if it directly uses the AHB frequency:\n\r\rSource: ST Reference manual RM0008\n\r\r\r\rSource: ST Programming manual PM0056\n\r\rAccording to this configuration, the variable ticks_per_ms either has the value of 72000 or 72000/8. Using the value of this variable, the reload value of the SysTick timer can be set accordingly. But also here to stay flexible and as generic as possible, it is first checked if there is already a reload value set or not. In the case that there is currently no reload value set (reload value == 0), the content of the ticks_per_ms variable will be used as the reload value. Otherwise, we work with the already given reload value inside the register. The only caveat of this approach is that in case the already given reload value is larger than the value of ticks_per_ms we are not able to exactly achieve the desired amount of milliseconds. Depending on the requested delay value and also the chosen SysTick divider, this effect might be either negligible or really bad.\nWorst case assessment: The divider of 8 is enabled and therefore we need 9000 ticks for 1ms delay. In case the reload value in the register is set to the highest value (0x00FFFFFF = 16777215) the smallest delay we can produce would be 16777215/9000 = 1864ms. When the AHB clock is directly used, this value reduces by a factor of 8 and the minimal delay would then be 233ms. I have decided to still keep this delay implementation as generic as possible, with the least influence on the surrounding code as possible. Therefore, it is necessary to just keep these limits in mind in the future.\nusbhid.c In this chapter, I just want to highlight the most important things in the code of the USB HID implementation. The full code (+ header files) can of course be found in the GitHub repo.\nIn order to turn the STM32 microcontroller into a USB device, a bunch of USB configurations need to be set using various USB descriptors. A basic USB descriptor hierarchy could look like this:\n\r\rSource: USB in a NutShell by Craig Peacock aka Beyond Logic\n\r\rEach USB device can have exactly one device descriptor. The device descriptor contains information about the device class (i.e., HID class), the sub-class, and the device protocol. Additionally, the vendor and product IDs are set here. Another important element in this descriptor struct is the bNumConfigurations setting, which defines the number of configuration descriptors for this device.\nstatic const struct usb_device_descriptor dev = { .bLength = USB_DT_DEVICE_SIZE, .bDescriptorType = USB_DT_DEVICE, .bcdUSB = 0x0200,\t/* USB 2.0 */ .bDeviceClass = USB_CLASS_HID, .bDeviceSubClass = USB_HID_SUBCLASS_BOOT_INTERFACE, .bDeviceProtocol = USB_HID_INTERFACE_PROTOCOL_MOUSE, .bMaxPacketSize0 = USB_HID_PACKET_SIZE, .idVendor = 0x0483,\t/* STM */ .idProduct = 0x5710,\t/* Joystick in FS Mode */ .bcdDevice = 0x0100,\t/* Device Release Number: 1.0 */ .iManufacturer = 1, .iProduct = 2, .iSerialNumber = 3, .bNumConfigurations = 1, }; In the case of this USB HID mouse jiggler, only one configuration descriptor is necessary. This descriptor gives information such as the number of interfaces (i.e., .bNumInterfaces = 1), the maximum power the device will draw, and if the device is powered over the BUS or self-powered.\nstatic const struct usb_config_descriptor config = { .bLength = USB_DT_CONFIGURATION_SIZE, .bDescriptorType = USB_DT_CONFIGURATION, .wTotalLength = USB_DT_CONFIGURATION_SIZE+USB_DT_INTERFACE_SIZE+USB_DT_ENDPOINT_SIZE+(sizeof(hid_function)), .bNumInterfaces = 1, .bConfigurationValue = 1, .iConfiguration = 0, .bmAttributes = 0x80,\t/* BUS powered Device */ .bMaxPower = 0x64,\t/* 0x64 - 100d - 100*2mA=200mA */ .interface = \u0026iface, }; In the project here, there is only one interface used and therefore only one interface descriptor is necessary. Besides the information on how many endpoints are inside the interface, it also contains information about the interface class, sub-class, and the used protocol.\nstatic const struct usb_interface_descriptor hid_iface = { .bLength = USB_DT_INTERFACE_SIZE, .bDescriptorType = USB_DT_INTERFACE, .bInterfaceNumber = 0, .bAlternateSetting = 0, .bNumEndpoints = 1, .bInterfaceClass = USB_CLASS_HID, .bInterfaceSubClass = USB_HID_SUBCLASS_BOOT_INTERFACE, .bInterfaceProtocol = USB_HID_INTERFACE_PROTOCOL_MOUSE, .iInterface = 0, .endpoint = \u0026hid_endpoint, .extra = \u0026hid_function, .extralen = sizeof(hid_function), }; static const struct usb_interface iface = { .num_altsetting = 1, .altsetting = \u0026hid_iface, }; The endpoint descriptor basically gives information about the endpoint type, the address \u0026 direction, the transfer type (i.e., interrupt), the maximum packet size, and the endpoint polling interval in frame counts (for the USB2.0 standard, 1 frame is equal to 1ms).\nstatic const struct usb_endpoint_descriptor hid_endpoint = { .bLength = USB_DT_ENDPOINT_SIZE, .bDescriptorType = USB_DT_ENDPOINT, .bEndpointAddress = 0x81,\t/* bit[7]=1b - direction: IN; bit[3:0]=001b - endpoint no. 1 */ .bmAttributes = USB_ENDPOINT_ATTR_INTERRUPT, .wMaxPacketSize = HID_DATA_PACKET_SIZE, .bInterval = 20,\t/* polling interval in frames (USB2.0: 1 frame = 1ms) - 20ms */ }; The interface descriptor not only links to the endpoint descriptor but also to the class-specific (i.e., HID) descriptor. This HID descriptor defines the length and type of the subordinate descriptors and also references to the HID report descriptor.\nstatic const uint8_t hid_report_descriptor[] = { 0x05, 0x01, /* USAGE_PAGE (Generic Desktop) */ 0x09, 0x02, /* USAGE (Mouse) */ 0xa1, 0x01, /* COLLECTION (Application) */ 0x09, 0x01, /* USAGE (Pointer) */ 0xa1, 0x00, /* COLLECTION (Physical) */ 0x05, 0x09, /* USAGE_PAGE (Button) */ 0x19, 0x01, /* USAGE_MINIMUM (Button 1) */ 0x29, 0x03, /* USAGE_MAXIMUM (Button 3) */ 0x15, 0x00, /* LOGICAL_MINIMUM (0) */ 0x25, 0x01, /* LOGICAL_MAXIMUM (1) */ 0x95, 0x03, /* REPORT_COUNT (3) */ 0x75, 0x01, /* REPORT_SIZE (1) */ 0x81, 0x02, /* INPUT (Data,Var,Abs) */ 0x95, 0x01, /* REPORT_COUNT (1) */ 0x75, 0x05, /* REPORT_SIZE (5) */ 0x81, 0x01, /* INPUT (Cnst,Ary,Abs) */ 0x05, 0x01, /* USAGE_PAGE (Generic Desktop) */ 0x09, 0x30, /* USAGE (X) */ 0x09, 0x31, /* USAGE (Y) */ 0x15, 0x81, /* LOGICAL_MINIMUM (-127) */ 0x25, 0x7f, /* LOGICAL_MAXIMUM (127) */ 0x75, 0x08, /* REPORT_SIZE (8) */ 0x95, 0x02, /* REPORT_COUNT (2) */ 0x81, 0x06, /* INPUT (Data,Var,Rel) */ 0xc0, /* END_COLLECTION */ 0xc0 /* END_COLLECTION */ }; static const struct { struct usb_hid_descriptor hid_descriptor; struct { uint8_t bReportDescriptorType; uint16_t wDescriptorLength; } __attribute__((packed)) hid_report; } __attribute__((packed)) hid_function = { .hid_descriptor = { .bLength = sizeof(hid_function), .bDescriptorType = USB_DT_HID, .bcdHID = 0x0100, .bCountryCode = 13, /* International (ISO) */ .bNumDescriptors = 1, }, .hid_report = { .bReportDescriptorType = USB_DT_REPORT, .wDescriptorLength = sizeof(hid_report_descriptor), } }; In this case here, the HID report descriptor configures a basic three-button mouse, that can click left, right, and middle. It can move in X and Y directions, but scrolling is not implemented. This results in the following data package:\nThe relative position values of X and Y are signed integer values and since they are only of 8-bit size, the minimum and maximum movement are -127 and 127 pixels. The buttons can only have the value 0 or 1 and are of a latching nature - this means setting the left button to 1 means that the HID device will click and hold the button until it is set back to 0.\nThe whole USB HID configuration gives the following descriptor tree. String descriptors would add human-readable information to the other descriptors. And the physical descriptor would provide information about the specific part of the human body that is activating a control. But since both are optional I have omitted them in my implementation.\n\r\rSource: Device Class Definition for Human Interface Devices (HID) Version 1.11\n\r\rSince all required USB descriptors are configured, we can now focus on the remaining part of the code (for a detailed code explanation see below):\nusbd_device *usb_device; static uint8_t usbd_control_buffer[128]; static enum usbd_request_return_codes hid_control_request_callback(usbd_device *usbd_dev, struct usb_setup_data *req, uint8_t **buf, uint16_t *len, void (**complete)(usbd_device *, struct usb_setup_data *)) { (void)complete; (void)buf; (void)usbd_dev; if((req-bmRequestType != 0x81) ||\t// D7: 1=Device-to-host; D6-D5: 0=Standard; D4-D0: 1=Interface \t(req-bRequest != USB_REQ_GET_DESCRIPTOR) ||\t// GET_DESCRIPTOR = 6 \t(req-wValue != 0x2200))\t// Descriptor Type (0x22 = HID report) and Descriptor Index (0x00) \t{ return USBD_REQ_NOTSUPP; } /* Handle the HID report descriptor. */ *buf = (uint8_t *)hid_report_descriptor; *len = sizeof(hid_report_descriptor); return USBD_REQ_HANDLED; } static void hid_set_config_callback(usbd_device *usbd_dev, uint16_t wValue) { (void)usbd_dev; (void)wValue; usbd_ep_setup(usbd_dev, 0x81, USB_ENDPOINT_ATTR_INTERRUPT, 4, ((void *)0)); usbd_register_control_callback( usbd_dev, USB_REQ_TYPE_STANDARD | USB_REQ_TYPE_INTERFACE, USB_REQ_TYPE_TYPE | USB_REQ_TYPE_RECIPIENT, hid_control_request_callback); } /* The USB_autodetect()-function is used to re-enumerate the USB device on the PC, so that after flashing, the device does not need to be physically reconnected. Additionally, USB D+ line (D23 = GPIOA, GPIO12) needs to be connected via a 1k5 Ohm pullup resistor to VCC (3.0 - 3.6V) to be compliant with the USB 2.0 full-speed electrical specification. */ static void USB_autodetect(void) { rcc_periph_clock_enable(RCC_GPIOA); #if (USB_DP_1K5_PULLUP_SWITCHABLE_VIA_GPIOB9 == 1U)  /* on the Maple Mini development board GPIOB 9 is used switch a transistor to dis-/connect an on-board 1k5 Ohm pullup resistor to USB D+ line */ rcc_periph_clock_enable(RCC_GPIOB); gpio_set_mode(GPIOB, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO9); gpio_clear(GPIOB, GPIO9); delay_ms(250); #else  /* in case the 1k5 Ohm pullup resistor is permanently connected to USB D+ line: set GPIOA, GPIO12 (USB D+ line) to output push-pull low (0V) and wait for 250ms */ gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO12); gpio_clear(GPIOA, GPIO12); delay_ms(250); #endif  /* set to alternate function (USB): */ gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_ALTFN_PUSHPULL, GPIO12); /* USB D+ line */ gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_ALTFN_PUSHPULL, GPIO11); /* USB D- line */ delay_ms(250); } void usb_hid_init(void) { USB_autodetect(); usb_device = usbd_init(\u0026st_usbfs_v1_usb_driver, \u0026dev, \u0026config, usb_strings, 3, usbd_control_buffer, sizeof(usbd_control_buffer)); usbd_register_set_config_callback(usb_device, hid_set_config_callback); nvic_set_priority(USB_IRQ, IRQ_PRI_USB); nvic_enable_irq(USB_IRQ); } void usb_hid_move_mouse_xy(int8_t x, int8_t y) { struct mouse_report_data_t { uint8_t buttons; int8_t move_x; int8_t move_y; } __attribute__((packed)) mouse_report_data = { .buttons = 0, // 0=no, 1=left, 2=right, 4=middle \t.move_x = x, .move_y = y, }; usbd_ep_write_packet(usb_device, 0x81, \u0026mouse_report_data, sizeof(mouse_report_data)); } void USB_ISR(void) { usbd_poll(usb_device); } There are only two functions exposed to the user via the function declaration in the header file:\n  void usb_hid_init(void):\n This init function calls the USB_autodetect()-function which is used to connect the USB D+ line via a 1k5 Ohm pullup resistor to VCC (the ensures that the device is re-enumerated on the bus). Additionally, the GPIO pins which are connected to the USB data lines are set to alternative output function push-pull. In the next step, the USB device is initialized with the usbd_init()-function. After the USB device init, the usbd_register_set_config_callback()-function is called. There the callback for the device configuration function (hid_set_config_callback()) is registered. In the last step, the low-priority interrupt for USB is enabled. This allows us to run the usbd_poll()-function inside the interrupt service routine which in my case is called USB_ISR(void) (with USB_ISR just being a macro for usb_lp_can_rx0_isr).    void usb_hid_move_mouse_xy(int8_t x, int8_t y):\n This function contains the data type struct that represents the mouse data according to the HID report settings. Meaning, that we have an unsigned 8-bit integer for the button states (0=no, 1=left, 2=right, 4=middle). As well as two signed 8-bit integers for X/Y-axis movements. For this mouse jiggler implementation we do not make use of the buttons and therefore set it to 0 (aka no buttons pressed). Last but not least, this data is sent with the usbd_ep_write_packet()-function at endpoint address 0x81.    Only the following two functions have not been described until now:\n hid_set_config_callback(…):  This function has already been mentioned above where the config callback has been registered. Essentially, we use this function to set up the USB device endpoint. Additionally, the callback for the control request function (hid_control_request_callback()) is registered here.   hid_control_request_callback(…):  USB background: USB devices need to respond to requests from the host (PC). Such requests are made using control transfers. The setup packet which is sent to the device contains the request and its parameters. This function handles such requests. We basically check if the request is of type “device-to-host” and “interface”. Then we verify that the request is a GET_DESCRIPTOR request and that the descriptor type is “HID report” with index “0”. If this is the case, we provide the hid_report_descriptor-variable and its size. Otherwise, we return a USBD_REQ_NOTSUPP (aka “request not supported”) message.    src main.c The finished usbhid-library can then be used in the main-function like this:\n#include \"usbhid.h\" int main(void) { usb_hid_init(); while (1) { delay_ms(1000); usb_hid_move_mouse_xy(10, 0); delay_ms(1000); usb_hid_move_mouse_xy(-10, 0); }\t} Result This would result in the following behavior of the mouse pointer: ",
+  "wordCount" : "2842",
+  "inLanguage": "en",
+  "image":"https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/images/mouse_jiggler.webp","datePublished": "2022-08-18T18:08:00+01:00",
+  "dateModified": "2022-08-18T18:08:00+01:00",
+  "author":{
+    "@type": "Person",
+    "name": "dadul96"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dadul96 blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dadul96.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://dadul96.github.io/" accesskey="h" title="dadul96 blog (Alt + H)">dadul96 blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://dadul96.github.io/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://dadul96.github.io/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://dadul96.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      STM32 USB HID Mouse Jiggler
+    </h1>
+    <div class="post-meta"><span title='2022-08-18 18:08:00 +0100 +0100'>August 18, 2022</span>&nbsp;·&nbsp;14 min&nbsp;·&nbsp;dadul96
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="lazy" src="https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/images/mouse_jiggler.webp" alt="picture of the STM32 mouse jiggler">
+        
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#introduction" aria-label="Introduction">Introduction</a></li>
+                <li>
+                    <a href="#hardware-setup" aria-label="Hardware Setup">Hardware Setup</a></li>
+                <li>
+                    <a href="#ide-and-framework" aria-label="IDE and Framework">IDE and Framework</a></li>
+                <li>
+                    <a href="#implementation" aria-label="Implementation">Implementation</a><ul>
+                        
+                <li>
+                    <a href="#project-folder-structure" aria-label="Project Folder Structure">Project Folder Structure</a></li>
+                <li>
+                    <a href="#usb_hid_lib" aria-label="usb_hid_lib">usb_hid_lib</a><ul>
+                        
+                <li>
+                    <a href="#delayc" aria-label="delay.c">delay.c</a></li>
+                <li>
+                    <a href="#usbhidc" aria-label="usbhid.c">usbhid.c</a></li></ul>
+                </li>
+                <li>
+                    <a href="#src" aria-label="src">src</a><ul>
+                        
+                <li>
+                    <a href="#mainc" aria-label="main.c">main.c</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#result" aria-label="Result">Result</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><em>An STM32-based USB HID device to periodically shake your mouse pointer.</em></p>
+<h1 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h1>
+<p>Sometimes I would find it useful to have a device that periodically would shake my mouse to prevent a PC from going to standby. Of course, you could always change or deactivate the standby functionality (if your organization allows you to do these changes), but sometimes you just don&rsquo;t want to fiddle around with these settings. One way of solving this would be to create a mechanical device that physically moves the mouse. However, a much simpler solution is to take an STM32 microcontroller and make use of the in-built USB 2.0 interface. In this article, I will show you how I have implemented exactly this. You can also find <a href="https://github.com/dadul96/STM32F103CB_Maple_Mini_Clone_USB_Mouse_Jiggler">this project on GitHub</a>.</p>
+<h1 id="hardware-setup">Hardware Setup<a hidden class="anchor" aria-hidden="true" href="#hardware-setup">#</a></h1>
+<p>First things first, what microcontroller will be used? In 2011 <a href="https://www.leaflabs.com/maple">Leaflabs</a> released their STM32F103CBT6-based development board called <em>Maple Mini</em>. It was discontinued in March 2015, but there are still some manufacturers out there selling <a href="https://stm32-base.org/boards/STM32F103C8T6-Baite-Maple-Mini-Clone">Maple Mini clones</a>. A few years back I ordered a couple of them and that&rsquo;s why I still use this quite <em>exotic</em> development board compared to the more widely known <a href="https://stm32-base.org/boards/STM32F103C8T6-Blue-Pill">Blue Pill boards</a>.</p>
+<p>In order to comply with the USB 2.0 full-speed electrical specification, it is also necessary to add a 1k5 Ohm pullup resistor between the USB D+ line (D23 = GPIOA, GPIO12) and VCC (3.0 - 3.6V). This ensures that the host (PC) detects the device on the bus.</p>
+<figure>
+    <img loading="lazy" src="images/stm32_usb_pullup.webp"
+         alt="figure of STM32 USB pullup circuit"/> <figcaption>
+            <p>Source: <a href="https://www.st.com/resource/en/application_note/dm00296349-usb-hardware-and-pcb-guidelines-using-stm32-mcus-stmicroelectronics.pdf">ST Application note AN4879</a></p>
+        </figcaption>
+</figure>
+
+<p>The Maple Mini has the advantage that there is already a 1k5 Ohm resistor onboard which is switchable via a transistor and the signal of the GPIOB9 pin.</p>
+<figure>
+    <img loading="lazy" src="images/usb_dp_pullup_on_maple_mini.webp"
+         alt="figure usb dp pullup on maple_mini"/> <figcaption>
+            <p>Source: <a href="https://github.com/leaflabs/maplemini/blob/master/maplemini.pdf">Maple Mini schematics</a></p>
+        </figcaption>
+</figure>
+
+<h1 id="ide-and-framework">IDE and Framework<a hidden class="anchor" aria-hidden="true" href="#ide-and-framework">#</a></h1>
+<p>Although the Maple Mini has quite good support for the Arduino IDE and Framework, I prefer to use <a href="https://platformio.org/">PlatformIO</a> on <a href="https://code.visualstudio.com/">Visual Studio Code</a> in combination with the open-source ARM Cortex library called <a href="https://libopencm3.org/">libopencm3</a>. In my case, no bootloader is installed on the microcontroller, and therefore an <a href="https://stm32-base.org/boards/Debugger-STM32F101C8T6-STLINKV2">ST-Link Debugger</a> and <a href="http://dfu-util.sourceforge.net/">dfu-util</a> will be used to flash the device.</p>
+<h1 id="implementation">Implementation<a hidden class="anchor" aria-hidden="true" href="#implementation">#</a></h1>
+<h2 id="project-folder-structure">Project Folder Structure<a hidden class="anchor" aria-hidden="true" href="#project-folder-structure">#</a></h2>
+<p>When creating a new project in PlatformIO the following folder structure will be created:
+<img loading="lazy" src="images/project_folder_structure.webp" alt="figure of project folder structure"  />
+</p>
+<p>Since I want to make the USB HID implementation re-useable for future projects, I will put the USB-specific code inside the <em>lib</em>-folder in a separate folder called <em>usb_hid_lib</em>.</p>
+<p>The main-file is of course placed in the <em>src</em>-folder and contains the function calls of this <em>usb_hid_lib</em> library.
+<img loading="lazy" src="images/project_folder_structure_2.webp" alt="figure of project folder structure 2"  />
+</p>
+<h2 id="usb_hid_lib">usb_hid_lib<a hidden class="anchor" aria-hidden="true" href="#usb_hid_lib">#</a></h2>
+<h3 id="delayc">delay.c<a hidden class="anchor" aria-hidden="true" href="#delayc">#</a></h3>
+<p>The goal is to have a mouse jiggler that periodically moves the mouse pointer. To execute such periodic events it is useful to have some sort of a delay-implementation. This delay-function can then later on also be used inside the USB HID code for the <em>USB_autodetect()</em>-function that will trigger a re-enumeration of the device on the bus. But more on that later.</p>
+<p>In order to not waste any of the timer/counter modules for the delay, it is a good idea to make use of the <a href="https://developer.arm.com/documentation/dui0552/a/cortex-m3-peripherals/system-timer--systick">24-bit SysTick timer</a> on the ARM Cortex M3 (STM32F103).</p>
+<p>Therefore the following libopencm3-files need to be included:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libopencm3/cm3/systick.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;libopencm3/stm32/rcc.h&gt;</span><span style="color:#75715e">
+</span></code></pre></div><p>The delay-function is implemented in the following manner:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">delay_ms</span>(<span style="color:#66d9ef">uint32_t</span> milliseconds)
+{
+	<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">uint8_t</span> init_done_flag <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">uint32_t</span> reload_val <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">uint32_t</span> ticks_per_ms <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style="color:#66d9ef">uint32_t</span> num_of_reloads <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+	<span style="color:#66d9ef">if</span> (init_done_flag <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+	{
+		<span style="color:#75715e">/* set SYSCLK to 72MHz using HSE 8MHz oscillator: */</span>
+		rcc_clock_setup_in_hse_8mhz_out_72mhz();
+
+		<span style="color:#75715e">/* check csr clocksource and set ticks_per_ms accordingly: */</span>
+		<span style="color:#66d9ef">if</span> ((STK_CSR <span style="color:#f92672">&amp;</span> STK_CSR_CLKSOURCE) <span style="color:#f92672">==</span> STK_CSR_CLKSOURCE_AHB)
+		{
+			ticks_per_ms <span style="color:#f92672">=</span> <span style="color:#ae81ff">72000U</span>; <span style="color:#75715e">/* 72MHz = 72M ticks/s -&gt; divide by 1000 to get ticks/ms */</span>
+		}
+		<span style="color:#66d9ef">else</span> <span style="color:#75715e">/* == STK_CSR_CLKSOURCE_AHB_DIV8 */</span>
+		{
+			ticks_per_ms <span style="color:#f92672">=</span> <span style="color:#ae81ff">72000U</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">8U</span>;
+		}
+
+		<span style="color:#75715e">/* get reload value or set own one if 0: */</span>
+		reload_val <span style="color:#f92672">=</span> systick_get_reload();
+		<span style="color:#66d9ef">if</span> (reload_val <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+		{
+			systick_set_reload(ticks_per_ms);
+			reload_val <span style="color:#f92672">=</span> ticks_per_ms;
+		}
+
+		<span style="color:#75715e">/* enable systick and set init_done_flag: */</span>
+		systick_counter_enable();
+		init_done_flag <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+	}
+
+	<span style="color:#66d9ef">while</span> ((num_of_reloads <span style="color:#f92672">*</span> reload_val) <span style="color:#f92672">&lt;</span> (milliseconds <span style="color:#f92672">*</span> ticks_per_ms))
+	{
+		<span style="color:#66d9ef">if</span> (systick_get_countflag()) <span style="color:#75715e">/* flag gets automatically cleared when read */</span>
+		{
+			num_of_reloads<span style="color:#f92672">++</span>;
+		}
+	}
+}
+</code></pre></div><p>The aim of this implementation is to be flexible/generic with the use of the SysTick timer. In other words, I want this implementation to be somewhat independent of the previous settings that were made to the SysTick timer (in case it was already used and configured in the code before). How is this accomplished?</p>
+<p>The first thing in the initialization is the setup of the system clock (SYSCLK). Since this code should only be re-usable on other Maple Mini projects, I have assumed that the clock will always make use of the on-board HSE (<strong>H</strong>igh-<strong>S</strong>peed <strong>E</strong>xternal) 8MHz oscillator and that the CPU clock will always be set to the maximum of 72MHz. This 72MHz CPU clock also fits nicely to the required 48MHz for the USB interface by just using a 1.5 clock divider. Because of this assumption, that in every future project the same clock settings will be used, it does not matter that some clock configuration inside this delay-function might have been already called somewhere else in the code before.</p>
+<p>In the next step, it is checked whether the SYSCLK clock source (which is coming through the AHB prescaler) has the SysTick divider of 8 selected or if it directly uses the AHB frequency:</p>
+<figure>
+    <img loading="lazy" src="images/clock_tree.webp"
+         alt="figure of clock tree"/> <figcaption>
+            <p>Source: <a href="https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf/jcr:content/translations/en.CD00171190.pdf">ST Reference manual RM0008</a></p>
+        </figcaption>
+</figure>
+
+<figure>
+    <img loading="lazy" src="images/systick_clock_source.webp"
+         alt="figure of systick clock source"/> <figcaption>
+            <p>Source: <a href="https://www.st.com/content/ccc/resource/technical/document/programming_manual/5b/ca/8d/83/56/7f/40/08/CD00228163.pdf/files/CD00228163.pdf/jcr:content/translations/en.CD00228163.pdf">ST Programming manual PM0056</a></p>
+        </figcaption>
+</figure>
+
+<p>According to this configuration, the variable <em>ticks_per_ms</em> either has the value of 72000 or 72000/8. Using the value of this variable, the reload value of the SysTick timer can be set accordingly. But also here to stay flexible and as generic as possible, it is first checked if there is already a reload value set or not. In the case that there is currently no reload value set (reload value == 0), the content of the <em>ticks_per_ms</em> variable will be used as the reload value. Otherwise, we work with the already given reload value inside the register. The only caveat of this approach is that in case the already given reload value is larger than the value of <em>ticks_per_ms</em> we are not able to exactly achieve the desired amount of milliseconds. Depending on the requested delay value and also the chosen SysTick divider, this effect might be either negligible or really bad.</p>
+<p><strong>Worst case assessment:</strong>
+The divider of 8 is enabled and therefore we need 9000 ticks for 1ms delay. In case the reload value in the register is set to the highest value (0x00FFFFFF = 16777215) the smallest delay we can produce would be 16777215/9000 = <strong>1864ms</strong>. When the AHB clock is directly used, this value reduces by a factor of 8 and the minimal delay would then be <strong>233ms</strong>. I have decided to still keep this delay implementation as generic as possible, with the least influence on the surrounding code as possible. Therefore, it is necessary to just <strong>keep these limits in mind</strong> in the future.</p>
+<h3 id="usbhidc">usbhid.c<a hidden class="anchor" aria-hidden="true" href="#usbhidc">#</a></h3>
+<p>In this chapter, I just want to highlight the most important things in the code of the USB HID implementation. The full code (+ header files) can of course be found in the <a href="https://github.com/dadul96/STM32F103CB_Maple_Mini_Clone_USB_Mouse_Jiggler">GitHub repo</a>.</p>
+<p>In order to turn the STM32 microcontroller into a USB device, a bunch of USB configurations need to be set using various USB descriptors. A basic USB descriptor hierarchy could look like this:</p>
+<figure>
+    <img loading="lazy" src="images/usb_general_descriptor_tree.webp"
+         alt="figure of general usb descriptor tree"/> <figcaption>
+            <p>Source: <a href="https://www.beyondlogic.org/usbnutshell/usb1.shtml">USB in a NutShell by Craig Peacock <em>aka Beyond Logic</em></a></p>
+        </figcaption>
+</figure>
+
+<p>Each USB device can have exactly one device descriptor. The device descriptor contains information about the device class (i.e., HID class), the sub-class, and the device protocol. Additionally, the vendor and product IDs are set here. Another important element in this descriptor struct is the <em>bNumConfigurations</em> setting, which defines the number of configuration descriptors for this device.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">usb_device_descriptor</span> dev <span style="color:#f92672">=</span> {
+	.bLength <span style="color:#f92672">=</span> USB_DT_DEVICE_SIZE,
+	.bDescriptorType <span style="color:#f92672">=</span> USB_DT_DEVICE,
+	.bcdUSB <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x0200</span>,		<span style="color:#75715e">/* USB 2.0 */</span>
+	.bDeviceClass <span style="color:#f92672">=</span> USB_CLASS_HID,
+	.bDeviceSubClass <span style="color:#f92672">=</span> USB_HID_SUBCLASS_BOOT_INTERFACE,
+	.bDeviceProtocol <span style="color:#f92672">=</span> USB_HID_INTERFACE_PROTOCOL_MOUSE,
+	.bMaxPacketSize0 <span style="color:#f92672">=</span> USB_HID_PACKET_SIZE,
+	.idVendor <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x0483</span>,		<span style="color:#75715e">/* STM */</span>
+	.idProduct <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x5710</span>,	<span style="color:#75715e">/* Joystick in FS Mode */</span>
+	.bcdDevice <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x0100</span>,	<span style="color:#75715e">/* Device Release Number: 1.0 */</span>
+	.iManufacturer <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+	.iProduct <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>,
+	.iSerialNumber <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>,
+	.bNumConfigurations <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+};
+</code></pre></div><p>In the case of this USB HID mouse jiggler, only one configuration descriptor is necessary. This descriptor gives information such as the number of interfaces (i.e., .bNumInterfaces = 1), the maximum power the device will draw, and if the device is powered over the BUS or self-powered.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">usb_config_descriptor</span> config <span style="color:#f92672">=</span> {
+	.bLength <span style="color:#f92672">=</span> USB_DT_CONFIGURATION_SIZE,
+	.bDescriptorType <span style="color:#f92672">=</span> USB_DT_CONFIGURATION,
+	.wTotalLength <span style="color:#f92672">=</span> USB_DT_CONFIGURATION_SIZE<span style="color:#f92672">+</span>USB_DT_INTERFACE_SIZE<span style="color:#f92672">+</span>USB_DT_ENDPOINT_SIZE<span style="color:#f92672">+</span>(<span style="color:#66d9ef">sizeof</span>(hid_function)),
+	.bNumInterfaces <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+	.bConfigurationValue <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+	.iConfiguration <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>,
+	.bmAttributes <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x80</span>,	<span style="color:#75715e">/* BUS powered Device */</span>
+	.bMaxPower <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x64</span>,		<span style="color:#75715e">/* 0x64 -&gt; 100d -&gt; 100*2mA=200mA */</span>
+
+	.interface <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>iface,
+};
+</code></pre></div><p>In the project here, there is only one interface used and therefore only one interface descriptor is necessary. Besides the information on how many endpoints are inside the interface, it also contains information about the interface class, sub-class, and the used protocol.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">usb_interface_descriptor</span> hid_iface <span style="color:#f92672">=</span> {
+	.bLength <span style="color:#f92672">=</span> USB_DT_INTERFACE_SIZE,
+	.bDescriptorType <span style="color:#f92672">=</span> USB_DT_INTERFACE,
+	.bInterfaceNumber <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>,
+	.bAlternateSetting <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>,
+	.bNumEndpoints <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+	.bInterfaceClass <span style="color:#f92672">=</span> USB_CLASS_HID,
+	.bInterfaceSubClass <span style="color:#f92672">=</span> USB_HID_SUBCLASS_BOOT_INTERFACE,
+	.bInterfaceProtocol <span style="color:#f92672">=</span> USB_HID_INTERFACE_PROTOCOL_MOUSE,
+	.iInterface <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>,
+
+	.endpoint <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>hid_endpoint,
+
+	.extra <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>hid_function,
+	.extralen <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(hid_function),
+};
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">usb_interface</span> iface <span style="color:#f92672">=</span> {
+	.num_altsetting <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+	.altsetting <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>hid_iface,
+};
+</code></pre></div><p>The endpoint descriptor basically gives information about the endpoint type, the address &amp; direction, the transfer type (i.e., interrupt), the maximum packet size, and the endpoint polling interval in frame counts (for the USB2.0 standard, 1 frame is equal to 1ms).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">usb_endpoint_descriptor</span> hid_endpoint <span style="color:#f92672">=</span> {
+	.bLength <span style="color:#f92672">=</span> USB_DT_ENDPOINT_SIZE,
+	.bDescriptorType <span style="color:#f92672">=</span> USB_DT_ENDPOINT,
+	.bEndpointAddress <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x81</span>,	<span style="color:#75715e">/* bit[7]=1b -&gt; direction: IN; bit[3:0]=001b -&gt; endpoint no. 1 */</span>
+	.bmAttributes <span style="color:#f92672">=</span> USB_ENDPOINT_ATTR_INTERRUPT,
+	.wMaxPacketSize <span style="color:#f92672">=</span> HID_DATA_PACKET_SIZE,
+	.bInterval <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>,			<span style="color:#75715e">/* polling interval in frames (USB2.0: 1 frame = 1ms) -&gt; 20ms */</span>
+};
+</code></pre></div><p>The interface descriptor not only links to the endpoint descriptor but also to the class-specific (i.e., HID) descriptor. This HID descriptor defines the length and type of the subordinate descriptors and also references to the HID report descriptor.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint8_t</span> hid_report_descriptor[] <span style="color:#f92672">=</span> {
+	<span style="color:#ae81ff">0x05</span>, <span style="color:#ae81ff">0x01</span>, <span style="color:#75715e">/* USAGE_PAGE (Generic Desktop)         */</span>
+	<span style="color:#ae81ff">0x09</span>, <span style="color:#ae81ff">0x02</span>, <span style="color:#75715e">/* USAGE (Mouse)                        */</span>
+	<span style="color:#ae81ff">0xa1</span>, <span style="color:#ae81ff">0x01</span>, <span style="color:#75715e">/* COLLECTION (Application)             */</span>
+	<span style="color:#ae81ff">0x09</span>, <span style="color:#ae81ff">0x01</span>, <span style="color:#75715e">/*   USAGE (Pointer)                    */</span>
+	<span style="color:#ae81ff">0xa1</span>, <span style="color:#ae81ff">0x00</span>, <span style="color:#75715e">/*   COLLECTION (Physical)              */</span>
+	<span style="color:#ae81ff">0x05</span>, <span style="color:#ae81ff">0x09</span>, <span style="color:#75715e">/*     USAGE_PAGE (Button)              */</span>
+	<span style="color:#ae81ff">0x19</span>, <span style="color:#ae81ff">0x01</span>, <span style="color:#75715e">/*     USAGE_MINIMUM (Button 1)         */</span>
+	<span style="color:#ae81ff">0x29</span>, <span style="color:#ae81ff">0x03</span>, <span style="color:#75715e">/*     USAGE_MAXIMUM (Button 3)         */</span>
+	<span style="color:#ae81ff">0x15</span>, <span style="color:#ae81ff">0x00</span>, <span style="color:#75715e">/*     LOGICAL_MINIMUM (0)              */</span>
+	<span style="color:#ae81ff">0x25</span>, <span style="color:#ae81ff">0x01</span>, <span style="color:#75715e">/*     LOGICAL_MAXIMUM (1)              */</span>
+	<span style="color:#ae81ff">0x95</span>, <span style="color:#ae81ff">0x03</span>, <span style="color:#75715e">/*     REPORT_COUNT (3)                 */</span>
+	<span style="color:#ae81ff">0x75</span>, <span style="color:#ae81ff">0x01</span>, <span style="color:#75715e">/*     REPORT_SIZE (1)                  */</span>
+	<span style="color:#ae81ff">0x81</span>, <span style="color:#ae81ff">0x02</span>, <span style="color:#75715e">/*     INPUT (Data,Var,Abs)             */</span>
+	<span style="color:#ae81ff">0x95</span>, <span style="color:#ae81ff">0x01</span>, <span style="color:#75715e">/*     REPORT_COUNT (1)                 */</span>
+	<span style="color:#ae81ff">0x75</span>, <span style="color:#ae81ff">0x05</span>, <span style="color:#75715e">/*     REPORT_SIZE (5)                  */</span>
+	<span style="color:#ae81ff">0x81</span>, <span style="color:#ae81ff">0x01</span>, <span style="color:#75715e">/*     INPUT (Cnst,Ary,Abs)             */</span>
+	<span style="color:#ae81ff">0x05</span>, <span style="color:#ae81ff">0x01</span>, <span style="color:#75715e">/*     USAGE_PAGE (Generic Desktop)     */</span>
+	<span style="color:#ae81ff">0x09</span>, <span style="color:#ae81ff">0x30</span>, <span style="color:#75715e">/*     USAGE (X)                        */</span>
+	<span style="color:#ae81ff">0x09</span>, <span style="color:#ae81ff">0x31</span>, <span style="color:#75715e">/*     USAGE (Y)                        */</span>
+	<span style="color:#ae81ff">0x15</span>, <span style="color:#ae81ff">0x81</span>, <span style="color:#75715e">/*     LOGICAL_MINIMUM (-127)           */</span>
+	<span style="color:#ae81ff">0x25</span>, <span style="color:#ae81ff">0x7f</span>, <span style="color:#75715e">/*     LOGICAL_MAXIMUM (127)            */</span>
+	<span style="color:#ae81ff">0x75</span>, <span style="color:#ae81ff">0x08</span>, <span style="color:#75715e">/*     REPORT_SIZE (8)                  */</span>
+	<span style="color:#ae81ff">0x95</span>, <span style="color:#ae81ff">0x02</span>, <span style="color:#75715e">/*     REPORT_COUNT (2)                 */</span>
+	<span style="color:#ae81ff">0x81</span>, <span style="color:#ae81ff">0x06</span>, <span style="color:#75715e">/*     INPUT (Data,Var,Rel)             */</span>
+	<span style="color:#ae81ff">0xc0</span>,       <span style="color:#75715e">/*   END_COLLECTION                     */</span>
+	<span style="color:#ae81ff">0xc0</span>        <span style="color:#75715e">/* END_COLLECTION                       */</span>
+};
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">usb_hid_descriptor</span> hid_descriptor;
+	<span style="color:#66d9ef">struct</span> {
+		<span style="color:#66d9ef">uint8_t</span> bReportDescriptorType;
+		<span style="color:#66d9ef">uint16_t</span> wDescriptorLength;
+	} __attribute__((packed)) hid_report;
+} __attribute__((packed)) hid_function <span style="color:#f92672">=</span> {
+	.hid_descriptor <span style="color:#f92672">=</span> {
+		.bLength <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(hid_function),
+		.bDescriptorType <span style="color:#f92672">=</span> USB_DT_HID,
+		.bcdHID <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x0100</span>,
+		.bCountryCode <span style="color:#f92672">=</span> <span style="color:#ae81ff">13</span>, <span style="color:#75715e">/* International (ISO) */</span>
+		.bNumDescriptors <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+	},
+	.hid_report <span style="color:#f92672">=</span> {
+		.bReportDescriptorType <span style="color:#f92672">=</span> USB_DT_REPORT,
+		.wDescriptorLength <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(hid_report_descriptor),
+	}
+};
+</code></pre></div><p>In this case here, the HID report descriptor configures a basic three-button mouse, that can click left, right, and middle. It can move in X and Y directions, but scrolling is not implemented. This results in the following data package:</p>
+<p><img loading="lazy" src="images/mouse_report_data_packet.webp" alt="figure of mouse report data packet"  />
+</p>
+<p>The relative position values of X and Y are signed integer values and since they are only of 8-bit size, the minimum and maximum movement are -127 and 127 pixels. The buttons can only have the value 0 or 1 and are of a latching nature - this means setting the left button to 1 means that the HID device will <em>click and hold</em> the button until it is set back to 0.</p>
+<p>The whole USB HID configuration gives the following descriptor tree. String descriptors would add human-readable information to the other descriptors. And the physical descriptor would provide information about the specific part of the human body that is activating a control. But since both are optional I have omitted them in my implementation.</p>
+<figure>
+    <img loading="lazy" src="images/usb_hid_descriptor_tree.webp"
+         alt="figure of usb hid descriptor tree"/> <figcaption>
+            <p>Source: <a href="https://www.usb.org/sites/default/files/hid1_11.pdf">Device Class Definition for Human Interface Devices (HID) Version 1.11</a></p>
+        </figcaption>
+</figure>
+
+<p>Since all required USB descriptors are configured, we can now focus on the remaining part of the code (for a detailed code explanation see below):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">usbd_device <span style="color:#f92672">*</span>usb_device;
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">uint8_t</span> usbd_control_buffer[<span style="color:#ae81ff">128</span>];
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">usbd_request_return_codes</span> <span style="color:#a6e22e">hid_control_request_callback</span>(usbd_device <span style="color:#f92672">*</span>usbd_dev, <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">usb_setup_data</span> <span style="color:#f92672">*</span>req, <span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">**</span>buf, <span style="color:#66d9ef">uint16_t</span> <span style="color:#f92672">*</span>len,
+			<span style="color:#66d9ef">void</span> (<span style="color:#f92672">**</span>complete)(usbd_device <span style="color:#f92672">*</span>, <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">usb_setup_data</span> <span style="color:#f92672">*</span>))
+{
+	(<span style="color:#66d9ef">void</span>)complete;
+	(<span style="color:#66d9ef">void</span>)buf;
+	(<span style="color:#66d9ef">void</span>)usbd_dev;
+
+	<span style="color:#66d9ef">if</span>((req<span style="color:#f92672">-&gt;</span>bmRequestType <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0x81</span>) <span style="color:#f92672">||</span>				<span style="color:#75715e">// D7: 1=Device-to-host; D6-D5: 0=Standard; D4-D0: 1=Interface
+</span><span style="color:#75715e"></span>	   (req<span style="color:#f92672">-&gt;</span>bRequest <span style="color:#f92672">!=</span> USB_REQ_GET_DESCRIPTOR) <span style="color:#f92672">||</span>	<span style="color:#75715e">// GET_DESCRIPTOR = 6
+</span><span style="color:#75715e"></span>	   (req<span style="color:#f92672">-&gt;</span>wValue <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0x2200</span>))						<span style="color:#75715e">// Descriptor Type (0x22 = HID report) and Descriptor Index (0x00)
+</span><span style="color:#75715e"></span>	{
+		<span style="color:#66d9ef">return</span> USBD_REQ_NOTSUPP;
+	}
+
+	<span style="color:#75715e">/* Handle the HID report descriptor. */</span>
+	<span style="color:#f92672">*</span>buf <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span>)hid_report_descriptor;
+	<span style="color:#f92672">*</span>len <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(hid_report_descriptor);
+
+	<span style="color:#66d9ef">return</span> USBD_REQ_HANDLED;
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">hid_set_config_callback</span>(usbd_device <span style="color:#f92672">*</span>usbd_dev, <span style="color:#66d9ef">uint16_t</span> wValue)
+{
+	(<span style="color:#66d9ef">void</span>)usbd_dev;
+	(<span style="color:#66d9ef">void</span>)wValue;
+
+	usbd_ep_setup(usbd_dev, <span style="color:#ae81ff">0x81</span>, USB_ENDPOINT_ATTR_INTERRUPT, <span style="color:#ae81ff">4</span>, ((<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0</span>));
+
+	usbd_register_control_callback(
+				usbd_dev,
+				USB_REQ_TYPE_STANDARD <span style="color:#f92672">|</span> USB_REQ_TYPE_INTERFACE,
+				USB_REQ_TYPE_TYPE <span style="color:#f92672">|</span> USB_REQ_TYPE_RECIPIENT,
+				hid_control_request_callback);
+}
+
+<span style="color:#75715e">/* The USB_autodetect()-function is used to re-enumerate the USB device on the PC,
+</span><span style="color:#75715e">so that after flashing, the device does not need to be physically reconnected. Additionally, 
+</span><span style="color:#75715e">USB D+ line (D23 = GPIOA, GPIO12) needs to be connected via a 1k5 Ohm pullup resistor to 
+</span><span style="color:#75715e">VCC (3.0 - 3.6V) to be compliant with the USB 2.0 full-speed electrical specification. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">USB_autodetect</span>(<span style="color:#66d9ef">void</span>)
+{
+    rcc_periph_clock_enable(RCC_GPIOA);
+
+<span style="color:#75715e">#if (USB_DP_1K5_PULLUP_SWITCHABLE_VIA_GPIOB9 == 1U)
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/* on the Maple Mini development board GPIOB 9 is used switch a transistor to dis-/connect an on-board
+</span><span style="color:#75715e">    1k5 Ohm pullup resistor to USB D+ line */</span>
+	rcc_periph_clock_enable(RCC_GPIOB);
+	gpio_set_mode(GPIOB, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO9);
+	gpio_clear(GPIOB, GPIO9);
+	delay_ms(<span style="color:#ae81ff">250</span>);
+<span style="color:#75715e">#else
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/* in case the 1k5 Ohm pullup resistor is permanently connected to USB D+ line:
+</span><span style="color:#75715e">    set GPIOA, GPIO12 (USB D+ line) to output push-pull low (0V) and wait for 250ms */</span>
+    gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO12);
+    gpio_clear(GPIOA, GPIO12);
+    delay_ms(<span style="color:#ae81ff">250</span>);
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>    
+    <span style="color:#75715e">/* set to alternate function (USB): */</span>
+    gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_ALTFN_PUSHPULL, GPIO12); <span style="color:#75715e">/* USB D+ line */</span>
+    gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ, GPIO_CNF_OUTPUT_ALTFN_PUSHPULL, GPIO11); <span style="color:#75715e">/* USB D- line */</span>
+    delay_ms(<span style="color:#ae81ff">250</span>);
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">usb_hid_init</span>(<span style="color:#66d9ef">void</span>)
+{
+	USB_autodetect();
+    usb_device <span style="color:#f92672">=</span> usbd_init(<span style="color:#f92672">&amp;</span>st_usbfs_v1_usb_driver, <span style="color:#f92672">&amp;</span>dev, <span style="color:#f92672">&amp;</span>config, usb_strings, <span style="color:#ae81ff">3</span>, usbd_control_buffer, <span style="color:#66d9ef">sizeof</span>(usbd_control_buffer));
+	usbd_register_set_config_callback(usb_device, hid_set_config_callback);
+    nvic_set_priority(USB_IRQ, IRQ_PRI_USB);
+	nvic_enable_irq(USB_IRQ);
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">usb_hid_move_mouse_xy</span>(<span style="color:#66d9ef">int8_t</span> x, <span style="color:#66d9ef">int8_t</span> y)
+{
+	<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">mouse_report_data_t</span> {
+		<span style="color:#66d9ef">uint8_t</span> buttons;
+		<span style="color:#66d9ef">int8_t</span> move_x;
+		<span style="color:#66d9ef">int8_t</span> move_y;
+	} __attribute__((packed)) mouse_report_data <span style="color:#f92672">=</span> {
+		.buttons <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#75715e">// 0=no, 1=left, 2=right, 4=middle
+</span><span style="color:#75715e"></span>		.move_x <span style="color:#f92672">=</span> x,
+		.move_y <span style="color:#f92672">=</span> y,
+	};
+
+	usbd_ep_write_packet(usb_device, <span style="color:#ae81ff">0x81</span>, <span style="color:#f92672">&amp;</span>mouse_report_data, <span style="color:#66d9ef">sizeof</span>(mouse_report_data));
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">USB_ISR</span>(<span style="color:#66d9ef">void</span>)
+{
+	usbd_poll(usb_device);
+}
+</code></pre></div><p>There are only two functions exposed to the user via the function declaration in the header file:</p>
+<ul>
+<li>
+<p><strong>void usb_hid_init(void):</strong></p>
+<ul>
+<li>This init function calls the USB_autodetect()-function which is used to connect the USB D+ line via a 1k5 Ohm pullup resistor to VCC (the ensures that the device is re-enumerated on the bus). Additionally, the GPIO pins which are connected to the USB data lines are set to alternative output function push-pull.</li>
+<li>In the next step, the USB device is initialized with the usbd_init()-function.</li>
+<li>After the USB device init, the usbd_register_set_config_callback()-function is called. There the callback for the device configuration function (hid_set_config_callback()) is <a href="https://stackoverflow.com/questions/8590335/what-do-you-mean-by-registering-a-callback-function-in-c">registered</a>.</li>
+<li>In the last step, the low-priority interrupt for USB is enabled. This allows us to run the usbd_poll()-function inside the interrupt service routine which in my case is called USB_ISR(void) (with <code>USB_ISR</code> just being a macro for <code>usb_lp_can_rx0_isr</code>).</li>
+</ul>
+</li>
+<li>
+<p><strong>void usb_hid_move_mouse_xy(int8_t x, int8_t y):</strong></p>
+<ul>
+<li>This function contains the data type struct that represents the mouse data according to the HID report settings. Meaning, that we have an unsigned 8-bit integer for the button states (0=no, 1=left, 2=right, 4=middle). As well as two signed 8-bit integers for X/Y-axis movements. For this mouse jiggler implementation we do not make use of the buttons and therefore set it to <code>0</code> <em>(aka no buttons pressed)</em>.</li>
+<li>Last but not least, this data is sent with the usbd_ep_write_packet()-function at endpoint address 0x81.</li>
+</ul>
+</li>
+</ul>
+<p>Only the following two functions have not been described until now:</p>
+<ul>
+<li><strong>hid_set_config_callback(&hellip;):</strong>
+<ul>
+<li>This function has already been mentioned above where the config callback has been registered. Essentially, we use this function to set up the USB device endpoint.</li>
+<li>Additionally, the callback for the control request function (hid_control_request_callback()) is registered here.</li>
+</ul>
+</li>
+<li><strong>hid_control_request_callback(&hellip;):</strong>
+<ul>
+<li><em>USB background: USB devices need to respond to requests from the host (PC). Such requests are made using control transfers. The setup packet which is sent to the device contains the request and its parameters.</em></li>
+<li>This function handles such requests. We basically check if the request is of type <em>&ldquo;device-to-host&rdquo;</em> and <em>&ldquo;interface&rdquo;</em>. Then we verify that the request is a <code>GET_DESCRIPTOR</code> request and that the descriptor type is <em>&ldquo;HID report&rdquo;</em> with index <em>&ldquo;0&rdquo;</em>. If this is the case, we provide the <em>hid_report_descriptor</em>-variable and its size. Otherwise, we return a <code>USBD_REQ_NOTSUPP</code> (<em>aka &ldquo;request not supported&rdquo;</em>) message.</li>
+</ul>
+</li>
+</ul>
+<h2 id="src">src<a hidden class="anchor" aria-hidden="true" href="#src">#</a></h2>
+<h3 id="mainc">main.c<a hidden class="anchor" aria-hidden="true" href="#mainc">#</a></h3>
+<p>The finished <em>usbhid</em>-library can then be used in the main-function like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;usbhid.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+{
+	usb_hid_init();
+
+	<span style="color:#66d9ef">while</span> (<span style="color:#ae81ff">1</span>)
+	{
+		delay_ms(<span style="color:#ae81ff">1000</span>);
+		usb_hid_move_mouse_xy(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0</span>);
+		delay_ms(<span style="color:#ae81ff">1000</span>);
+		usb_hid_move_mouse_xy(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0</span>);
+	}		
+}
+</code></pre></div><h1 id="result">Result<a hidden class="anchor" aria-hidden="true" href="#result">#</a></h1>
+<p>This would result in the following behavior of the mouse pointer:
+<img loading="lazy" src="images/mouse_pointer_animation.gif" alt="animated gif of mouse pointer"  />
+</p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://dadul96.github.io/tags/microcontroller/">microcontroller</a></li>
+      <li><a href="https://dadul96.github.io/tags/stm32/">stm32</a></li>
+      <li><a href="https://dadul96.github.io/tags/usb/">usb</a></li>
+      <li><a href="https://dadul96.github.io/tags/coding/">coding</a></li>
+      <li><a href="https://dadul96.github.io/tags/electronics/">electronics</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://dadul96.github.io/posts/hpl_benchmark_on_pi4/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>HPL Benchmark on a Raspberry Pi 4B</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://dadul96.github.io/">dadul96 blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

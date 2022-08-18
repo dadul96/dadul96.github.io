@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>microcontroller on dadul96 blog</title>
+    <link>https://dadul96.github.io/tags/microcontroller/</link>
+    <description>Recent content in microcontroller on dadul96 blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Aug 2022 18:08:00 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/tags/microcontroller/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>STM32 USB HID Mouse Jiggler</title>
+      <link>https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/</link>
+      <pubDate>Thu, 18 Aug 2022 18:08:00 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/</guid>
+      <description>&lt;p&gt;&lt;em&gt;An STM32-based USB HID device to periodically shake your mouse pointer.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
