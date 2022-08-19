@@ -270,10 +270,7 @@
 
   <div class="post-content"><p><em>A guide on how to run the HPL benchmark on a Raspberry Pi 4B. Various Rasbpian OS versions are used (buster, bullseye, 32-bit, 64-bit) and the results are compared.</em></p>
 <h1 id="why-the-hpl-benchmark">Why the HPL Benchmark?<a hidden class="anchor" aria-hidden="true" href="#why-the-hpl-benchmark">#</a></h1>
-<p>One major reason for choosing the <a href="https://www.netlib.org/benchmark/hpl/">HPL benchmark</a> is the ability to either run it on 32-bit or 64-bit systems and different architectures such as ARM, x86, and x86-64.
-Another benefit of choosing this benchmark is its extensive use in research ([1]-[8]) for measuring the performance of single board computers and single board computer clusters.
-This already brings me to the next reason. The HPL benchmark can be used to also benchmark computer clusters. In fact, this is the main use-case of this benchmark.
-Therefore, it is no wonder that it is also used for the list of  <a href="https://www.top500.org/project/top500_description/">Top500</a> - a list of the currently leading supercomputers worldwide.</p>
+<p>One major reason for choosing the <a href="https://www.netlib.org/benchmark/hpl/">HPL benchmark</a> is the ability to either run it on 32-bit or 64-bit systems and different architectures such as ARM, x86, and x86-64. Another benefit of choosing this benchmark is its extensive use in research ([1]-[8]) for measuring the performance of single board computers and single board computer clusters. This already brings me to the next reason. The HPL benchmark can be used to also benchmark computer clusters. In fact, this is the main use-case of this benchmark. Therefore, it is no wonder that it is also used for the list of  <a href="https://www.top500.org/project/top500_description/">Top500</a> - a list of the currently leading supercomputers worldwide.</p>
 <h1 id="hardware">Hardware<a hidden class="anchor" aria-hidden="true" href="#hardware">#</a></h1>
 <h3 id="setup">Setup<a hidden class="anchor" aria-hidden="true" href="#setup">#</a></h3>
 <ul>
@@ -283,8 +280,7 @@ Therefore, it is no wonder that it is also used for the list of  <a href="https:
 <li>Seeed Studio <a href="https://www.mouser.at/new/seeed-studio/seeed-studio-black-warrior-fan/">Black Warrior ICE Tower</a> CPU Cooling Fan (see <a href="images/pi.webp">cover image</a>)</li>
 </ul>
 <h3 id="cpu-c0t-stepping">CPU C0T stepping<a hidden class="anchor" aria-hidden="true" href="#cpu-c0t-stepping">#</a></h3>
-<p>The C0T stepping basically allows the Raspberry Pi 4B to run 1.8GHz out of the box (only on bullseye) compared to the 1.5GHz found on the B0T stepping level. Jeff Geerling created a nice <a href="https://www.youtube.com/watch?v=FkMfN9GvslM">video</a> on that topic.
-According to some quick <a href="https://www.jeffgeerling.com/blog/2020/raspberry-pi-400-teardown-and-review">tests from him</a>, this results in a measurable performance increase of approx. 18% using the Phoronix benchmark.</p>
+<p>The C0T stepping basically allows the Raspberry Pi 4B to run 1.8GHz out of the box (only on bullseye) compared to the 1.5GHz found on the B0T stepping level. Jeff Geerling created a nice <a href="https://www.youtube.com/watch?v=FkMfN9GvslM">video</a> on that topic. According to some quick <a href="https://www.jeffgeerling.com/blog/2020/raspberry-pi-400-teardown-and-review">tests from him</a>, this results in a measurable performance increase of approx. 18% using the Phoronix benchmark.</p>
 <p>GitHub user <a href="https://github.com/pelwell">pelwell</a> states that <a href="https://github.com/raspberrypi/linux/issues/3210#issuecomment-680007995">two other problem fixes</a> are included in this stepping:</p>
 <ul>
 <li>The EMMC2 bus can only directly address the first 1GB.</li>
@@ -487,8 +483,7 @@ You might also want to save the results to a log file.
 This command combines all-in-one:</p>
 <p><code>(mpiexec -np 4 ./xhpl &amp;&amp; vcgencmd measure_temp &amp;&amp; vcgencmd get_throttled) | sudo tee benchmark_log.txt</code></p>
 <h1 id="results-and-interpretation">Results and Interpretation<a hidden class="anchor" aria-hidden="true" href="#results-and-interpretation">#</a></h1>
-<p>All 4 OS versions have been benchmarked using the steps mentioned in the previous chapters. For each benchmark, the same HPL config has been chosen.
-However, the <strong>NB</strong> and <strong>N</strong> parameters have been tuned on each OS version individually - to achieve maximum performance.</p>
+<p>All 4 OS versions have been benchmarked using the steps mentioned in the previous chapters. For each benchmark, the same HPL config has been chosen. However, the <strong>NB</strong> and <strong>N</strong> parameters have been tuned on each OS version individually - to achieve maximum performance.</p>
 <h3 id="benchmarking-procedure">Benchmarking Procedure<a hidden class="anchor" aria-hidden="true" href="#benchmarking-procedure">#</a></h3>
 <ol>
 <li>Sweep through the following NB parameters using a constant N of 20000:</li>
@@ -499,8 +494,7 @@ However, the <strong>NB</strong> and <strong>N</strong> parameters have been tun
 </ol>
 <p><code>20000 21000 22000 23000 24000 25000 26000 27000 28000 29000 30000 31000 32000 33000</code></p>
 <h3 id="what-to-expect">What to expect?<a hidden class="anchor" aria-hidden="true" href="#what-to-expect">#</a></h3>
-<p>The Pi Model 4B uses the BCM2711C0 SoC - a Cortex-A72 chip - with 4 cores each capable of 4 double-precision floating-point operations per clock cycle [9]-[13].
-Using the following formula, the theoretically possible performance can be calculated:</p>
+<p>The Pi Model 4B uses the BCM2711C0 SoC - a Cortex-A72 chip - with 4 cores each capable of 4 double-precision floating-point operations per clock cycle [9]-[13]. Using the following formula, the theoretically possible performance can be calculated:</p>
 <p><strong>FLOPS = F<sub>clock</sub>[Hz] * FLOP/cycle * N<sub>cores</sub></strong></p>
 <p>This gives:</p>
 <ul>
@@ -513,9 +507,7 @@ Using the following formula, the theoretically possible performance can be calcu
 <img loading="lazy" src="images/N_sweep.webp" alt="figure of the N sweep benchmark results"  />
 </p>
 <h3 id="interpretation">Interpretation<a hidden class="anchor" aria-hidden="true" href="#interpretation">#</a></h3>
-<p>As it can be seen in the NB-sweep figure, an NB value of 104 gives the best performance - except for buster 32-bit, where the peak is at NB=112.
-For the N-sweep, the result is more uniform. All OS versions peak at N=31000. At N=32000, the benchmark already <em>&ldquo;crashes&rdquo;</em>.
-To optimize even further, it would make sense to choose an N value that is a multiple of NB.</p>
+<p>As it can be seen in the NB-sweep figure, an NB value of 104 gives the best performance - except for buster 32-bit, where the peak is at NB=112. For the N-sweep, the result is more uniform. All OS versions peak at N=31000. At N=32000, the benchmark already <em>&ldquo;crashes&rdquo;</em>. To optimize even further, it would make sense to choose an N value that is a multiple of NB.</p>
 <table>
 <thead>
 <tr>
@@ -552,15 +544,9 @@ To optimize even further, it would make sense to choose an N value that is a mul
 </tr>
 </tbody>
 </table>
-<p>The table above shows a comparison of the measured performances for the different OS versions. Interesting here is the <em>Benchmark Efficiency</em><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
-This efficiency indicates how much of the theoretical performance could be measured by the benchmark.
-As it can be seen the new bullseye OS achieves a lower benchmark efficiency, compared to buster. However, the measured performance is still higher.</p>
+<p>The table above shows a comparison of the measured performances for the different OS versions. Interesting here is the <em>Benchmark Efficiency</em><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. This efficiency indicates how much of the theoretical performance could be measured by the benchmark. As it can be seen the new bullseye OS achieves a lower benchmark efficiency, compared to buster. However, the measured performance is still higher.</p>
 <h3 id="what-can-be-concluded">What can be concluded?<a hidden class="anchor" aria-hidden="true" href="#what-can-be-concluded">#</a></h3>
-<p>It can be said, that the new bullseye OS gives an expected performance boost of approx. 20 %. Additionally, there is also
-a slight performance increase when switching from 32-bit to 64-bit. However, this performance difference is nowhere close to the
-values measured by <a href="https://matteocroce.medium.com/">Matteo Croce</a>, when he <a href="https://matteocroce.medium.com/why-you-should-run-a-64-bit-os-on-your-raspberry-pi4-bd5290d48947">compared Debian 32-bit to the aarch64 build of Debian</a>
-on a Raspberry Pi 4B using the <a href="https://en.wikipedia.org/wiki/Dhrystone">dhrystone</a> benchmark.
-There he saw a performance increase of approx. 51 %.</p>
+<p>It can be said, that the new bullseye OS gives an expected performance boost of approx. 20 %. Additionally, there is also a slight performance increase when switching from 32-bit to 64-bit. However, this performance difference is nowhere close to the values measured by <a href="https://matteocroce.medium.com/">Matteo Croce</a>, when he <a href="https://matteocroce.medium.com/why-you-should-run-a-64-bit-os-on-your-raspberry-pi4-bd5290d48947">compared Debian 32-bit to the aarch64 build of Debian</a> on a Raspberry Pi 4B using the <a href="https://en.wikipedia.org/wiki/Dhrystone">dhrystone</a> benchmark. There he saw a performance increase of approx. 51 %.</p>
 <h1 id="references-and-links">References and Links<a hidden class="anchor" aria-hidden="true" href="#references-and-links">#</a></h1>
 <p>[1] D. Papakyriakou, D. Kottou, and I. Kostouros, “Benchmarking Raspberry Pi 2 Beowulf Cluster”, International Journal of Computer Applications, vol. 179, no. 32, pp. 21–27, Apr. 2018. doi: <a href="https://doi.org/10.5120/ijca2018916728">10.5120/ijca2018916728</a>.</p>
 <p>[2] E.-L. Bleeker and M. Reinholdsson, “Creating a Raspberry Pi-BasedBeowulf Cluster”, M.S. thesis, Karlstad University, 2017. [Online]. Available: <a href="https://www.diva-portal.org/smash/get/diva2:1110319/FULLTEXT02.pdf">https://www.diva-portal.org/smash/get/diva2:1110319/FULLTEXT02.pdf</a> (visited on 02/26/2022).</p>
