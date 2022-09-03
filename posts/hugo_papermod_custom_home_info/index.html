@@ -61,12 +61,12 @@
 <meta property="og:description" content="A quick guide on how to customize the Home-Info field of the Hugo PaperMod theme." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://dadul96.github.io/posts/hugo_papermod_custom_home_info/" />
-<meta property="og:image" content="https://dadul96.github.io/posts/hugo_papermod_custom_home_info/images/custom_home_info.webp" /><meta property="article:section" content="posts" />
+<meta property="og:image" content="https://dadul96.github.io/posts/hugo_papermod_custom_home_info/images/cover.webp" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-02-19T16:39:04&#43;01:00" />
 <meta property="article:modified_time" content="2022-02-19T16:39:04&#43;01:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://dadul96.github.io/posts/hugo_papermod_custom_home_info/images/custom_home_info.webp" />
+<meta name="twitter:image" content="https://dadul96.github.io/posts/hugo_papermod_custom_home_info/images/cover.webp" />
 <meta name="twitter:title" content="Hugo PaperMod: Custom Home-Info"/>
 <meta name="twitter:description" content="A quick guide on how to customize the Home-Info field of the Hugo PaperMod theme."/>
 
@@ -104,7 +104,7 @@
   "articleBody": "A quick guide on how to customize the Home-Info field of the Hugo PaperMod theme.\nThe Hugo PaperMod theme has become a quite popular blog theme since 2021. In fact, also this blog is built on the Hugo framework in combination with the PaperMod theme. In my opinion, the optional Home-Info mode is the most beautiful layout you can choose in this theme (see below).\nHowever, two things slightly bother me. First, it would be nice if there was the option to add a profile picture next to the text. And the second improvement I would wish for is the option to use custom social link icons.\nHence, I developed the following solution for me. I simply use HTML formatting in config-file where the homeInfoParams: are described. This way, it is super easy to create a custom design for this layout. In order to get this working properly, it must be ensured that the markup goldmark renderer supports HTML.\nHere is my example configuration for the goldmark renderer (in config.yaml):\nmarkup: goldmark: extensions: definitionList: true footnote: true linkify: true strikethrough: true table: true taskList: true typographer: true parser: attribute: block: false title: true autoHeadingID: true autoHeadingIDType: github renderer: hardWraps: false unsafe: true # xhtml: false After changing this you can use HTML syntax in the homeInfoParams: config (in config.yaml):\nhomeInfoParams: Title: Hi there, I'm Daniel. 👋 Content:        Everything technical gives me a lot of joy. Starting from A like Artificial Intelligence to Z like Zener Diode - I dig that stuff!  This blog is a collection of the thoughts, ideas, and projects that I would like to share with the world wide web.                               The icons which you use in the HTML code are stored in “hugo_project_name/static/”.\nAs a result, you would get a design that is similar to my currently used one: ",
   "wordCount" : "425",
   "inLanguage": "en",
-  "image":"https://dadul96.github.io/posts/hugo_papermod_custom_home_info/images/custom_home_info.webp","datePublished": "2022-02-19T16:39:04+01:00",
+  "image":"https://dadul96.github.io/posts/hugo_papermod_custom_home_info/images/cover.webp","datePublished": "2022-02-19T16:39:04+01:00",
   "dateModified": "2022-02-19T16:39:04+01:00",
   "author":{
     "@type": "Person",
@@ -197,7 +197,7 @@
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="lazy" src="https://dadul96.github.io/posts/hugo_papermod_custom_home_info/images/custom_home_info.webp" alt="screenshot of customized home info of Hugo PaperMod">
+        <img loading="lazy" src="https://dadul96.github.io/posts/hugo_papermod_custom_home_info/images/cover.webp" alt="cover picture: screenshot of customized home info of Hugo PaperMod">
         
 </figure>
   <div class="post-content"><p><em>A quick guide on how to customize the Home-Info field of the Hugo PaperMod theme.</em></p>
