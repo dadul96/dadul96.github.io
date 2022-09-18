@@ -2,13 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://dadul96.github.io/categories/</loc>
-    <lastmod>2022-08-18T18:08:00+01:00</lastmod>
+    <loc>https://dadul96.github.io/tags/3d-design/</loc>
+    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
   </url><url>
-    <loc>https://dadul96.github.io/tags/coding/</loc>
-    <lastmod>2022-08-18T18:08:00+01:00</lastmod>
+    <loc>https://dadul96.github.io/tags/3d-printing/</loc>
+    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/categories/3d-printing/</loc>
+    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/categories/</loc>
+    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/</loc>
+    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/posts/headlamp_on_a_bike/</loc>
+    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/photogrammetry/</loc>
+    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/posts/</loc>
+    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/</loc>
+    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/coding/</loc>
     <lastmod>2022-08-18T18:08:00+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/tags/electronics/</loc>
@@ -20,16 +41,10 @@
     <loc>https://dadul96.github.io/categories/microcontroller/</loc>
     <lastmod>2022-08-18T18:08:00+01:00</lastmod>
   </url><url>
-    <loc>https://dadul96.github.io/posts/</loc>
-    <lastmod>2022-08-18T18:08:00+01:00</lastmod>
-  </url><url>
     <loc>https://dadul96.github.io/tags/stm32/</loc>
     <lastmod>2022-08-18T18:08:00+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/</loc>
-    <lastmod>2022-08-18T18:08:00+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/</loc>
     <lastmod>2022-08-18T18:08:00+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/tags/usb/</loc>

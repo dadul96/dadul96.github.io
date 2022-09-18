@@ -6,7 +6,16 @@
     <description>Recent content on dadul96 blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Aug 2022 18:08:00 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Sep 2022 15:15:03 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mounting a Headlamp on a Mountain Bike</title>
+      <link>https://dadul96.github.io/posts/headlamp_on_a_bike/</link>
+      <pubDate>Sun, 18 Sep 2022 15:15:03 +0100</pubDate>
+      
+      <guid>https://dadul96.github.io/posts/headlamp_on_a_bike/</guid>
+      <description>&lt;p&gt;&lt;em&gt;Mounting a headlamp on a mountain bike using photogrammetry, CAD, 3D printing, and trial &amp;amp; error&lt;/em&gt; 😁&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>STM32 USB HID Mouse Jiggler</title>
       <link>https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/</link>
