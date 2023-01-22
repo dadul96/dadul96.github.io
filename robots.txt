@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /archive/
+Disallow: /categories/
+Disallow: /tags/
+
+Sitemap: https://dadul96.github.io/sitemap.xml
