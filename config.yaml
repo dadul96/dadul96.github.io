@@ -48,6 +48,7 @@ params:
     keywords: [Blog, dadul96, Daniel, Programming, Coding, Software, Hardware, Electronics, 3D Printing]
     env: production
     enableRobotsTXT: false
+    timeZone: Europe/Vienna
     
     #-------------
     homeInfoParams:
