@@ -4,53 +4,44 @@
     <title>Categories on dadul96 blog</title>
     <link>https://dadul96.github.io/categories/</link>
     <description>Recent content in Categories on dadul96 blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.133.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Sep 2022 15:15:03 +0100</lastBuildDate><atom:link href="https://dadul96.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Sep 2022 15:15:03 +0100</lastBuildDate>
+    <atom:link href="https://dadul96.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>3D printing</title>
+      <title>3D Printing</title>
       <link>https://dadul96.github.io/categories/3d-printing/</link>
       <pubDate>Sun, 18 Sep 2022 15:15:03 +0100</pubDate>
-      
       <guid>https://dadul96.github.io/categories/3d-printing/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>microcontroller</title>
+      <title>Microcontroller</title>
       <link>https://dadul96.github.io/categories/microcontroller/</link>
       <pubDate>Thu, 18 Aug 2022 18:08:00 +0100</pubDate>
-      
       <guid>https://dadul96.github.io/categories/microcontroller/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>raspberry pi</title>
+      <title>Raspberry Pi</title>
       <link>https://dadul96.github.io/categories/raspberry-pi/</link>
       <pubDate>Sun, 27 Feb 2022 14:28:06 +0100</pubDate>
-      
       <guid>https://dadul96.github.io/categories/raspberry-pi/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>coding</title>
+      <title>Coding</title>
       <link>https://dadul96.github.io/categories/coding/</link>
       <pubDate>Sat, 19 Feb 2022 16:39:04 +0100</pubDate>
-      
       <guid>https://dadul96.github.io/categories/coding/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>thoughts</title>
+      <title>Thoughts</title>
       <link>https://dadul96.github.io/categories/thoughts/</link>
       <pubDate>Tue, 01 Feb 2022 17:15:03 +0100</pubDate>
-      
       <guid>https://dadul96.github.io/categories/thoughts/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

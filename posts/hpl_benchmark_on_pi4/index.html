@@ -6,13 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>HPL Benchmark on a Raspberry Pi 4B | dadul96 blog</title>
-<meta name="keywords" content="raspberry pi, benchmark" />
+<meta name="keywords" content="raspberry pi, benchmark">
 <meta name="description" content="A guide on how to run the HPL benchmark on a Raspberry Pi 4B. Various Rasbpian OS versions are used (buster, bullseye, 32-bit, 64-bit) and the results are compared.">
 <meta name="author" content="dadul96">
-<link rel="canonical" href="https://dadul96.github.io/posts/hpl_benchmark_on_pi4/" />
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="canonical" href="https://dadul96.github.io/posts/hpl_benchmark_on_pi4/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.54405a410796490bc874ab6181fac9b675753cc2b91375d8f882566459eca428.css" integrity="sha256-VEBaQQeWSQvIdKthgfrJtnV1PMK5E3XY&#43;IJWZFnspCg=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://dadul96.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://dadul96.github.io/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://dadul96.github.io/favicon-32x32.png">
@@ -20,7 +18,7 @@
 <link rel="mask-icon" href="https://dadul96.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.92.1" />
+<link rel="alternate" hreflang="en" href="https://dadul96.github.io/posts/hpl_benchmark_on_pi4/">
 <noscript>
     <style>
         #theme-toggle,
@@ -38,7 +36,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -57,13 +55,16 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="HPL Benchmark on a Raspberry Pi 4B" />
+</noscript>
+  
+
+<meta property="og:title" content="HPL Benchmark on a Raspberry Pi 4B" />
 <meta property="og:description" content="A guide on how to run the HPL benchmark on a Raspberry Pi 4B. Various Rasbpian OS versions are used (buster, bullseye, 32-bit, 64-bit) and the results are compared." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://dadul96.github.io/posts/hpl_benchmark_on_pi4/" />
 <meta property="og:image" content="https://dadul96.github.io/posts/hpl_benchmark_on_pi4/images/cover.webp" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-02-27T14:28:06&#43;01:00" />
-<meta property="article:modified_time" content="2022-02-27T14:28:06&#43;01:00" />
+<meta property="article:published_time" content="2022-02-27T14:28:06+01:00" />
+<meta property="article:modified_time" content="2022-02-27T14:28:06+01:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://dadul96.github.io/posts/hpl_benchmark_on_pi4/images/cover.webp" />
@@ -101,7 +102,7 @@
   "keywords": [
     "raspberry pi", "benchmark"
   ],
-  "articleBody": "A guide on how to run the HPL benchmark on a Raspberry Pi 4B. Various Rasbpian OS versions are used (buster, bullseye, 32-bit, 64-bit) and the results are compared.\nWhy the HPL Benchmark? One major reason for choosing the HPL benchmark is the ability to either run it on 32-bit or 64-bit systems and different architectures such as ARM, x86, and x86-64. Another benefit of choosing this benchmark is its extensive use in research ([1]-[8]) for measuring the performance of single board computers and single board computer clusters. This already brings me to the next reason. The HPL benchmark can be used to also benchmark computer clusters. In fact, this is the main use-case of this benchmark. Therefore, it is no wonder that it is also used for the list of Top500 - a list of the currently leading supercomputers worldwide.\nHardware Setup  Raspberry Pi 4B 8GB with C0T stepping SanDisk Ultra microSDHC UHS-I Class 10 A1 (up to 120MB/s) Official USB C power supply (5.1V, 3A) Seeed Studio Black Warrior ICE Tower CPU Cooling Fan (see cover image)  CPU C0T stepping The C0T stepping basically allows the Raspberry Pi 4B to run 1.8GHz out of the box (only on bullseye) compared to the 1.5GHz found on the B0T stepping level. Jeff Geerling created a nice video on that topic. According to some quick tests from him, this results in a measurable performance increase of approx. 18% using the Phoronix benchmark.\nGitHub user pelwell states that two other problem fixes are included in this stepping:\n The EMMC2 bus can only directly address the first 1GB. The PCIe interface can only directly address the first 3GB.  Besides the model number on the SoC itself, the stepping can also be determined by checking the bus decleration of the SD card controller:\n# B0 pi@raspberrypi:~$ od -An -tx1 /proc/device-tree/emmc2bus/dma-ranges 00 00 00 00 c0 00 00 00 00 00 00 00 00 00 00 00 40 00 00 00 # C0 pi@raspberrypi:~$ od -An -tx1 /proc/device-tree/emmc2bus/dma-ranges 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 fc 00 00 00 Software Operating Sytems  RaspiOS lite buster armhf (32-bit) 2021-05-07 RaspiOS lite buster arm64 (64-bit) 2021-05-07 RaspiOS lite bullseye armhf (32-bit) 2021-10-30 RaspiOS lite bullseye arm64 (64-bit) 2021-10-30  Benchmark Software  HPL benchmark in the latest version (v2.3) compiled on the Pi MPICH in the latest version (v3.4.2) compiled on the Pi OpenBLAS in the latest version (v0.3.19) compiled on the Pi  System Configuration Overview  Disabled HDMI output CPU governor set to performance (no clocking down in idle) Disabled BT and WiFi Disabled swap Disabled system logs GPU memory set to minimum (16MB) Enabled SSH Hostname set to ‘raspberrypi’ User and password are kept at default (‘pi’ and ‘raspberry’)  Setting up the Pi  Format the SDCard with the official SD Association Formatter Flash the desired OS image onto the SDCard Before inserting the SDCard the first time:  Add a ssh file to enable the SSH functionality In ‘config.txt’ add:    dtoverlay=disable-wifi dtoverlay=disable-bt boot_delay=1 gpu_mem=16  Insert the SDCard and power on for the first time\n  Connect via SSH (I use PuTTY)\n  Update all packages:\nsudo apt-get update sudo apt-get upgrade   Open init.d script with sudo nano /etc/init.d/raspi-config to use performance as the default CPU governor when not booting with shift key pressed.\n  Open rc.local script with sudo nano /etc/rc.local and enter the following before exit 0:\n# Disable HDMI /usr/bin/tvservice -o   Reboot and check if the governor is set to performance with the following command:\ncat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor\n  Disable swap with:\nsystemctl disable dphys-swapfile\n  Reboot and check if swap is disabled by looking at the memory using the command:\nfree\n  Setting up the Benchmark Install git using sudo apt-get -y install git Install Fortran77 using sudo apt-get -y install gfortran Install MPICH v3.4.2 using the following commands:  wget http://www.mpich.org/static/downloads/3.4.2/mpich-3.4.2.tar.gz tar xvf mpich-3.4.2.tar.gz cd mpich-3.4.2 This step depends on the OS version   buster (32 \u0026 64-bit): ./configure --prefix=/opt/mpich/3.4.2/ --enable-fast --with-device=ch3\n  bullseye (64-bit): ./configure --prefix=/opt/mpich/3.4.2/ --enable-fast --with-device=ch3 FFLAGS=-fallow-argument-mismatch \n  bullseye (32-bit): ./configure --prefix=/opt/mpich/3.4.2/ --enable-fast --with-device=ch3 FFLAGS=-fallow-argument-mismatch \nAdditionally, in the file src/binding/fortran/use_mpi_f08/mpi_f08_types.f90, the real128 and complex128 declarations as well as the associated subroutines need to be commented out. More info on that issue and workaround: Stack Overflow, MPICH, GCC\n   make sudo make install   Install OpenBLAS using the following commands:  sudo apt -y remove libopenblas-dev libopenblas-base openmpi-bin cd export PATH=/opt/mpich/3.4.2/bin:$PATH git clone https://github.com/xianyi/OpenBLAS.git cd OpenBLAS make sudo make PREFIX=/opt/openblas install   Install HPL v2.3 using the following commands:  cd wget https://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz tar xvf hpl-2.3.tar.gz cd hpl-2.3 export LD_LIBRARY_PATH=/opt/openblas/lib:$LD_LIBRARY_PATH export LIBRARY_PATH=/opt/openblas/lib:$LIBRARY_PATH ./configure --prefix=/opt/hpl make sudo make install   Open bashrc using sudo nano ~/.bashrc and add the following lines to the end of the file:  export PATH=/opt/mpich/3.4.2/bin:$PATH export LD_LIBRARY_PATH=/opt/openblas/lib:$LD_LIBRARY_PATH export LIBRARY_PATH=/opt/openblas/lib:$LIBRARY_PATH export OPENBLAS_NUM_THREADS=1 Running the Benchmark HPL Config File First, an HPL config file needs to be created:\n cd cd /opt/hpl/bin/ sudo nano HPL.dat Copy the following config to this file and modify to your needs:  HPLinpack benchmark input file Innovative Computing Laboratory, University of Tennessee HPL.out output file name (if any) 6 device out (6=stdout,7=stderr,file) 1 # of problems sizes (N) 29000 Ns 1 # of NBs 120 NBs 0 PMAP process mapping (0=Row-,1=Column-major) 1 # of process grids (P x Q) 1 Ps 4 Qs -16.0 threshold 1 # of panel fact 2 PFACTs (0=left, 1=Crout, 2=Right) 1 # of recursive stopping criterium 4 NBMINs (= 1) 1 # of panels in recursion 2 NDIVs 1 # of recursive panel fact. 0 RFACTs (0=left, 1=Crout, 2=Right) 1 # of broadcast 2 BCASTs (0=1rg,1=1rM,2=2rg,3=2rM,4=Lng,5=LnM) 1 # of lookahead depth 1 DEPTHs (=0) 0 SWAP (0=bin-exch,1=long,2=mix) 64 swapping threshold 0 L1 in (0=transposed,1=no-transposed) form 0 U in (0=transposed,1=no-transposed) form 1 Equilibration (0=no,1=yes) 8 memory alignment in double ( 0) Save file (^X to exit; followed by Y to save)  Starting the Benchmark The benchmark can then be started inside the /opt/hpl/bin/ folder by using the command:\nmpiexec -np 4 ./xhpl (-np 4 sets the number of processes to 4)\n💡 Tip: It also makes sense to display the CPU temperature and the thermal throttling flag, after the benchmark is finished. You might also want to save the results to a log file. This command combines all-in-one:\n(mpiexec -np 4 ./xhpl \u0026\u0026 vcgencmd measure_temp \u0026\u0026 vcgencmd get_throttled) | sudo tee benchmark_log.txt\nResults and Interpretation All 4 OS versions have been benchmarked using the steps mentioned in the previous chapters. For each benchmark, the same HPL config has been chosen. However, the NB and N parameters have been tuned on each OS version individually - to achieve maximum performance.\nBenchmarking Procedure  Sweep through the following NB parameters using a constant N of 20000:  88 96 104 112 120 128 136 144 152 160 168 176 184 192 200 208 216 224 232 240\nThe NB value that achieved the highest performance is then used for sweeping through the following N parameters:  20000 21000 22000 23000 24000 25000 26000 27000 28000 29000 30000 31000 32000 33000\nWhat to expect? The Pi Model 4B uses the BCM2711C0 SoC - a Cortex-A72 chip - with 4 cores each capable of 4 double-precision floating-point operations per clock cycle [9]-[13]. Using the following formula, the theoretically possible performance can be calculated:\nFLOPS = Fclock[Hz] * FLOP/cycle * Ncores\nThis gives:\n buster: 24.0 GFLOPS bullseye: 28.8 GFLOPS (because of +20% clock freq.)  Results Interpretation As it can be seen in the NB-sweep figure, an NB value of 104 gives the best performance - except for buster 32-bit, where the peak is at NB=112. For the N-sweep, the result is more uniform. All OS versions peak at N=31000. At N=32000, the benchmark already “crashes”. To optimize even further, it would make sense to choose an N value that is a multiple of NB.\n   OS Version Theoretical Performance [GFLOPS] Measured Performance [GFLOPS] Benchmark Efficiency [%]     buster 32-bit 24.0 14.203 59   buster 64-bit 24.0 14.600 61   bullseye 32-bit 28.8 16.353 57   bullseye 64-bit 28.8 17.198 60    The table above shows a comparison of the measured performances for the different OS versions. Interesting here is the Benchmark Efficiency1. This efficiency indicates how much of the theoretical performance could be measured by the benchmark. As it can be seen the new bullseye OS achieves a lower benchmark efficiency, compared to buster. However, the measured performance is still higher.\nWhat can be concluded? It can be said, that the new bullseye OS gives an expected performance boost of approx. 20 %. Additionally, there is also a slight performance increase when switching from 32-bit to 64-bit. However, this performance difference is nowhere close to the values measured by Matteo Croce, when he compared Debian 32-bit to the aarch64 build of Debian on a Raspberry Pi 4B using the dhrystone benchmark. There he saw a performance increase of approx. 51 %.\nReferences and Links [1] D. Papakyriakou, D. Kottou, and I. Kostouros, “Benchmarking Raspberry Pi 2 Beowulf Cluster”, International Journal of Computer Applications, vol. 179, no. 32, pp. 21–27, Apr. 2018. doi: 10.5120/ijca2018916728.\n[2] E.-L. Bleeker and M. Reinholdsson, “Creating a Raspberry Pi-BasedBeowulf Cluster”, M.S. thesis, Karlstad University, 2017. [Online]. Available: https://www.diva-portal.org/smash/get/diva2:1110319/FULLTEXT02.pdf (visited on 02/26/2022).\n[3] B. Dye, “DISTRIBUTED COMPUTING WITH THE RASPBERRY PI”, M.S. thesis, Kansas State University, 2014. [Online]. Available: https://www.collectionbooks.net/pdf/distributed-computing-with-the-raspberry-pi (visited on 02/26/2022).\n[4] C. Baun, “Performance and Energy-Efficiency Aspects of Clusters of Single Board Computers”, International Journal of Distributed and Parallel systems, vol. 7, no. 2 / 3 / 4, pp. 13–22, Jul. 2016. doi: 10.5121/ijdps.2016.7402.\n[5] P. J. Basford, S. J. Johnston, C. S. Perkins, et al., “Performance analysis of single board computer clusters”, Future Generation Computer Systems, vol. 102, pp. 278–291, Jan. 2020. doi: 10.1016/j.future.2019.07.040.\n[6] E. Wilcox, P. Jhunjhunwala, K. Gopavaram, and J. Herrera, Pi-Crust : A Raspberry Pi Cluster Implementation, 2015. [Online]. Available: http://jorgehc.com/files/pi_crust_paper.pdf (visited on 02/26/2022).\n[7] R. Longbottom, “Raspberry Pi 64 Bit OS and 8 GB Pi 4B Benchmarks”, en, 2020. doi: 10.13140/RG.2.2.22698.44489.\n[8] ——, “Raspberry Pi 4B Stress Tests Including High Performance Linpack”, en, 2019. doi: 10.13140/RG.2.2.13784.85767.\n[9] Raspberry Pi Foundation, Raspberry Pi 4 Tech Specs. [Online]. Available: https://www.raspberrypi.org/products/raspberry-pi-4-model-b/specifications/ (visited on 02/26/2022).\n[10] Broadcom Europe Ltd., Raspberry Pi Trading Lt., BCM2711 ARM Peripheral. [Online]. Available: https://datasheets.raspberrypi.org/bcm2711/bcm2711-peripherals.pdf (visited on 02/26/2022).\n[11] WikiChip LLC, Floating-Point Operations Per Second (FLOPS). [Online]. Available: https://en.wikichip.org/wiki/flops (visited on 02/26/2022).\n[12] Arm Limited, Cortex-A72. [Online]. Available: https://developer.arm.com/ip-products/processors/cortex-a/cortex-a72 (visited on 02/26/2022).\n[13] A. Frumusanu, ARM Reveals Cortex-A72 Architecture Details. [Online]. Available: https://www.anandtech.com/show/9184/arm-reveals-cortex-a72-architecture-details (visited on 02/26/2022).\n  This is just my naming for this parameter. If you know the official name, please send me an e-mail. 😃 ↩︎\n  ",
+  "articleBody": "A guide on how to run the HPL benchmark on a Raspberry Pi 4B. Various Rasbpian OS versions are used (buster, bullseye, 32-bit, 64-bit) and the results are compared.\nWhy the HPL Benchmark? One major reason for choosing the HPL benchmark is the ability to either run it on 32-bit or 64-bit systems and different architectures such as ARM, x86, and x86-64. Another benefit of choosing this benchmark is its extensive use in research ([1]-[8]) for measuring the performance of single board computers and single board computer clusters. This already brings me to the next reason. The HPL benchmark can be used to also benchmark computer clusters. In fact, this is the main use-case of this benchmark. Therefore, it is no wonder that it is also used for the list of Top500 - a list of the currently leading supercomputers worldwide.\nHardware Setup Raspberry Pi 4B 8GB with C0T stepping SanDisk Ultra microSDHC UHS-I Class 10 A1 (up to 120MB/s) Official USB C power supply (5.1V, 3A) Seeed Studio Black Warrior ICE Tower CPU Cooling Fan (see cover image) CPU C0T stepping The C0T stepping basically allows the Raspberry Pi 4B to run 1.8GHz out of the box (only on bullseye) compared to the 1.5GHz found on the B0T stepping level. Jeff Geerling created a nice video on that topic. According to some quick tests from him, this results in a measurable performance increase of approx. 18% using the Phoronix benchmark.\nGitHub user pelwell states that two other problem fixes are included in this stepping:\nThe EMMC2 bus can only directly address the first 1GB. The PCIe interface can only directly address the first 3GB. Besides the model number on the SoC itself, the stepping can also be determined by checking the bus decleration of the SD card controller:\n# B0 pi@raspberrypi:~$ od -An -tx1 /proc/device-tree/emmc2bus/dma-ranges 00 00 00 00 c0 00 00 00 00 00 00 00 00 00 00 00 40 00 00 00 # C0 pi@raspberrypi:~$ od -An -tx1 /proc/device-tree/emmc2bus/dma-ranges 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 fc 00 00 00 Software Operating Sytems RaspiOS lite buster armhf (32-bit) 2021-05-07 RaspiOS lite buster arm64 (64-bit) 2021-05-07 RaspiOS lite bullseye armhf (32-bit) 2021-10-30 RaspiOS lite bullseye arm64 (64-bit) 2021-10-30 Benchmark Software HPL benchmark in the latest version (v2.3) compiled on the Pi MPICH in the latest version (v3.4.2) compiled on the Pi OpenBLAS in the latest version (v0.3.19) compiled on the Pi System Configuration Overview Disabled HDMI output CPU governor set to performance (no clocking down in idle) Disabled BT and WiFi Disabled swap Disabled system logs GPU memory set to minimum (16MB) Enabled SSH Hostname set to ‘raspberrypi’ User and password are kept at default (‘pi’ and ‘raspberry’) Setting up the Pi Format the SDCard with the official SD Association Formatter Flash the desired OS image onto the SDCard Before inserting the SDCard the first time: Add a ssh file to enable the SSH functionality In ‘config.txt’ add: dtoverlay=disable-wifi\rdtoverlay=disable-bt\rboot_delay=1\rgpu_mem=16 Insert the SDCard and power on for the first time\nConnect via SSH (I use PuTTY)\nUpdate all packages:\nsudo apt-get update sudo apt-get upgrade Open init.d script with sudo nano /etc/init.d/raspi-config to use performance as the default CPU governor when not booting with shift key pressed.\nOpen rc.local script with sudo nano /etc/rc.local and enter the following before exit 0:\n# Disable HDMI /usr/bin/tvservice -o Reboot and check if the governor is set to performance with the following command:\ncat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor\nDisable swap with:\nsystemctl disable dphys-swapfile\nReboot and check if swap is disabled by looking at the memory using the command:\nfree\nSetting up the Benchmark Install git using sudo apt-get -y install git Install Fortran77 using sudo apt-get -y install gfortran Install MPICH v3.4.2 using the following commands: wget http://www.mpich.org/static/downloads/3.4.2/mpich-3.4.2.tar.gz tar xvf mpich-3.4.2.tar.gz cd mpich-3.4.2 This step depends on the OS version buster (32 \u0026 64-bit): ./configure --prefix=/opt/mpich/3.4.2/ --enable-fast --with-device=ch3\nbullseye (64-bit): ./configure --prefix=/opt/mpich/3.4.2/ --enable-fast --with-device=ch3 FFLAGS=-fallow-argument-mismatch bullseye (32-bit): ./configure --prefix=/opt/mpich/3.4.2/ --enable-fast --with-device=ch3 FFLAGS=-fallow-argument-mismatch Additionally, in the file src/binding/fortran/use_mpi_f08/mpi_f08_types.f90, the real128 and complex128 declarations as well as the associated subroutines need to be commented out. More info on that issue and workaround: Stack Overflow, MPICH, GCC\nmake sudo make install Install OpenBLAS using the following commands: sudo apt -y remove libopenblas-dev libopenblas-base openmpi-bin cd export PATH=/opt/mpich/3.4.2/bin:$PATH git clone https://github.com/xianyi/OpenBLAS.git cd OpenBLAS make sudo make PREFIX=/opt/openblas install Install HPL v2.3 using the following commands: cd wget https://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz tar xvf hpl-2.3.tar.gz cd hpl-2.3 export LD_LIBRARY_PATH=/opt/openblas/lib:$LD_LIBRARY_PATH export LIBRARY_PATH=/opt/openblas/lib:$LIBRARY_PATH ./configure --prefix=/opt/hpl make sudo make install Open bashrc using sudo nano ~/.bashrc and add the following lines to the end of the file: export PATH=/opt/mpich/3.4.2/bin:$PATH export LD_LIBRARY_PATH=/opt/openblas/lib:$LD_LIBRARY_PATH export LIBRARY_PATH=/opt/openblas/lib:$LIBRARY_PATH export OPENBLAS_NUM_THREADS=1 Running the Benchmark HPL Config File First, an HPL config file needs to be created:\ncd cd /opt/hpl/bin/ sudo nano HPL.dat Copy the following config to this file and modify to your needs: HPLinpack benchmark input file\rInnovative Computing Laboratory, University of Tennessee\rHPL.out output file name (if any)\r6 device out (6=stdout,7=stderr,file)\r1 # of problems sizes (N)\r29000 Ns\r1 # of NBs\r120 NBs\r0 PMAP process mapping (0=Row-,1=Column-major)\r1 # of process grids (P x Q)\r1 Ps\r4 Qs\r-16.0 threshold\r1 # of panel fact\r2 PFACTs (0=left, 1=Crout, 2=Right)\r1 # of recursive stopping criterium\r4 NBMINs (\u003e= 1)\r1 # of panels in recursion\r2 NDIVs\r1 # of recursive panel fact.\r0 RFACTs (0=left, 1=Crout, 2=Right)\r1 # of broadcast\r2 BCASTs (0=1rg,1=1rM,2=2rg,3=2rM,4=Lng,5=LnM)\r1 # of lookahead depth\r1 DEPTHs (\u003e=0)\r0 SWAP (0=bin-exch,1=long,2=mix)\r64 swapping threshold\r0 L1 in (0=transposed,1=no-transposed) form\r0 U in (0=transposed,1=no-transposed) form\r1 Equilibration (0=no,1=yes)\r8 memory alignment in double (\u003e 0) Save file (^X to exit; followed by Y to save) Starting the Benchmark The benchmark can then be started inside the /opt/hpl/bin/ folder by using the command:\nmpiexec -np 4 ./xhpl (-np 4 sets the number of processes to 4)\n💡 Tip: It also makes sense to display the CPU temperature and the thermal throttling flag, after the benchmark is finished. You might also want to save the results to a log file. This command combines all-in-one:\n(mpiexec -np 4 ./xhpl \u0026\u0026 vcgencmd measure_temp \u0026\u0026 vcgencmd get_throttled) | sudo tee benchmark_log.txt\nResults and Interpretation All 4 OS versions have been benchmarked using the steps mentioned in the previous chapters. For each benchmark, the same HPL config has been chosen. However, the NB and N parameters have been tuned on each OS version individually - to achieve maximum performance.\nBenchmarking Procedure Sweep through the following NB parameters using a constant N of 20000: 88 96 104 112 120 128 136 144 152 160 168 176 184 192 200 208 216 224 232 240\nThe NB value that achieved the highest performance is then used for sweeping through the following N parameters: 20000 21000 22000 23000 24000 25000 26000 27000 28000 29000 30000 31000 32000 33000\nWhat to expect? The Pi Model 4B uses the BCM2711C0 SoC - a Cortex-A72 chip - with 4 cores each capable of 4 double-precision floating-point operations per clock cycle [9]-[13]. Using the following formula, the theoretically possible performance can be calculated:\nFLOPS = Fclock[Hz] * FLOP/cycle * Ncores\nThis gives:\nbuster: 24.0 GFLOPS bullseye: 28.8 GFLOPS (because of +20% clock freq.) Results Interpretation As it can be seen in the NB-sweep figure, an NB value of 104 gives the best performance - except for buster 32-bit, where the peak is at NB=112. For the N-sweep, the result is more uniform. All OS versions peak at N=31000. At N=32000, the benchmark already “crashes”. To optimize even further, it would make sense to choose an N value that is a multiple of NB.\nOS Version Theoretical Performance [GFLOPS] Measured Performance [GFLOPS] Benchmark Efficiency [%] buster 32-bit 24.0 14.203 59 buster 64-bit 24.0 14.600 61 bullseye 32-bit 28.8 16.353 57 bullseye 64-bit 28.8 17.198 60 The table above shows a comparison of the measured performances for the different OS versions. Interesting here is the Benchmark Efficiency1. This efficiency indicates how much of the theoretical performance could be measured by the benchmark. As it can be seen the new bullseye OS achieves a lower benchmark efficiency, compared to buster. However, the measured performance is still higher.\nWhat can be concluded? It can be said, that the new bullseye OS gives an expected performance boost of approx. 20 %. Additionally, there is also a slight performance increase when switching from 32-bit to 64-bit. However, this performance difference is nowhere close to the values measured by Matteo Croce, when he compared Debian 32-bit to the aarch64 build of Debian on a Raspberry Pi 4B using the dhrystone benchmark. There he saw a performance increase of approx. 51 %.\nReferences and Links [1] D. Papakyriakou, D. Kottou, and I. Kostouros, “Benchmarking Raspberry Pi 2 Beowulf Cluster”, International Journal of Computer Applications, vol. 179, no. 32, pp. 21–27, Apr. 2018. doi: 10.5120/ijca2018916728.\n[2] E.-L. Bleeker and M. Reinholdsson, “Creating a Raspberry Pi-BasedBeowulf Cluster”, M.S. thesis, Karlstad University, 2017. [Online]. Available: https://www.diva-portal.org/smash/get/diva2:1110319/FULLTEXT02.pdf (visited on 02/26/2022).\n[3] B. Dye, “DISTRIBUTED COMPUTING WITH THE RASPBERRY PI”, M.S. thesis, Kansas State University, 2014. [Online]. Available: https://www.collectionbooks.net/pdf/distributed-computing-with-the-raspberry-pi (visited on 02/26/2022).\n[4] C. Baun, “Performance and Energy-Efficiency Aspects of Clusters of Single Board Computers”, International Journal of Distributed and Parallel systems, vol. 7, no. 2 / 3 / 4, pp. 13–22, Jul. 2016. doi: 10.5121/ijdps.2016.7402.\n[5] P. J. Basford, S. J. Johnston, C. S. Perkins, et al., “Performance analysis of single board computer clusters”, Future Generation Computer Systems, vol. 102, pp. 278–291, Jan. 2020. doi: 10.1016/j.future.2019.07.040.\n[6] E. Wilcox, P. Jhunjhunwala, K. Gopavaram, and J. Herrera, Pi-Crust : A Raspberry Pi Cluster Implementation, 2015. [Online]. Available: http://jorgehc.com/files/pi_crust_paper.pdf (visited on 02/26/2022).\n[7] R. Longbottom, “Raspberry Pi 64 Bit OS and 8 GB Pi 4B Benchmarks”, en, 2020. doi: 10.13140/RG.2.2.22698.44489.\n[8] ——, “Raspberry Pi 4B Stress Tests Including High Performance Linpack”, en, 2019. doi: 10.13140/RG.2.2.13784.85767.\n[9] Raspberry Pi Foundation, Raspberry Pi 4 Tech Specs. [Online]. Available: https://www.raspberrypi.org/products/raspberry-pi-4-model-b/specifications/ (visited on 02/26/2022).\n[10] Broadcom Europe Ltd., Raspberry Pi Trading Lt., BCM2711 ARM Peripheral. [Online]. Available: https://datasheets.raspberrypi.org/bcm2711/bcm2711-peripherals.pdf (visited on 02/26/2022).\n[11] WikiChip LLC, Floating-Point Operations Per Second (FLOPS). [Online]. Available: https://en.wikichip.org/wiki/flops (visited on 02/26/2022).\n[12] Arm Limited, Cortex-A72. [Online]. Available: https://developer.arm.com/ip-products/processors/cortex-a/cortex-a72 (visited on 02/26/2022).\n[13] A. Frumusanu, ARM Reveals Cortex-A72 Architecture Details. [Online]. Available: https://www.anandtech.com/show/9184/arm-reveals-cortex-a72-architecture-details (visited on 02/26/2022).\nThis is just my naming for this parameter. If you know the official name, please send me an e-mail. 😃 ↩︎\n",
   "wordCount" : "1742",
   "inLanguage": "en",
   "image":"https://dadul96.github.io/posts/hpl_benchmark_on_pi4/images/cover.webp","datePublished": "2022-02-27T14:28:06+01:00",
@@ -142,14 +143,14 @@
     <nav class="nav">
         <div class="logo">
             <a href="https://dadul96.github.io/" accesskey="h" title="dadul96 blog (Alt + H)">dadul96 blog</a>
-            <span class="logo-switches">
+            <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -163,7 +164,7 @@
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
-            </span>
+            </div>
         </div>
         <ul id="menu">
             <li>
@@ -189,7 +190,7 @@
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       HPL Benchmark on a Raspberry Pi 4B
     </h1>
     <div class="post-meta"><span title='2022-02-27 14:28:06 +0100 CET'>February 27, 2022</span>&nbsp;·&nbsp;9 min&nbsp;·&nbsp;dadul96
@@ -197,7 +198,7 @@
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="lazy" src="https://dadul96.github.io/posts/hpl_benchmark_on_pi4/images/cover.webp" alt="cover picture: raspberry pi with cooling fan">
+        <img loading="eager" src="https://dadul96.github.io/posts/hpl_benchmark_on_pi4/images/cover.webp" alt="cover picture: raspberry pi with cooling fan">
         <p><a href="https://www.mouser.at/new/seeed-studio/seeed-studio-black-warrior-fan/">Link to image source</a></p>
 </figure><div class="toc">
     <details  open>
@@ -287,16 +288,16 @@
 <li>The PCIe interface can only directly address the first 3GB.</li>
 </ul>
 <p>Besides the model number on the SoC itself, the stepping can also be determined by <a href="https://github.com/raspberrypi/linux/issues/3210#issuecomment-680035201">checking the bus decleration of the SD card controller</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># B0</span>
-pi@raspberrypi:~$ od -An -tx1 /proc/device-tree/emmc2bus/dma-ranges
- <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> c0 <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>
- <span style="color:#ae81ff">40</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>
-
-<span style="color:#75715e"># C0</span>
-pi@raspberrypi:~$ od -An -tx1 /proc/device-tree/emmc2bus/dma-ranges
- <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>
- fc <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>
-</code></pre></div><h1 id="software">Software<a hidden class="anchor" aria-hidden="true" href="#software">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># B0</span>
+</span></span><span style="display:flex;"><span>pi@raspberrypi:~$ od -An -tx1 /proc/device-tree/emmc2bus/dma-ranges
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> c0 <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">40</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># C0</span>
+</span></span><span style="display:flex;"><span>pi@raspberrypi:~$ od -An -tx1 /proc/device-tree/emmc2bus/dma-ranges
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>
+</span></span><span style="display:flex;"><span> fc <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>
+</span></span></code></pre></div><h1 id="software">Software<a hidden class="anchor" aria-hidden="true" href="#software">#</a></h1>
 <h3 id="operating-sytems">Operating Sytems<a hidden class="anchor" aria-hidden="true" href="#operating-sytems">#</a></h3>
 <ul>
 <li>RaspiOS lite buster armhf (32-bit) 2021-05-07</li>
@@ -346,17 +347,17 @@ gpu_mem=16
 </li>
 <li>
 <p>Update all packages:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get update
-sudo apt-get upgrade
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get update
+</span></span><span style="display:flex;"><span>sudo apt-get upgrade
+</span></span></code></pre></div></li>
 <li>
 <p>Open <code>init.d</code> script with <code>sudo nano /etc/init.d/raspi-config</code> to use <code>performance</code> as the default CPU governor when not booting with shift key pressed.</p>
 </li>
 <li>
 <p>Open <code>rc.local</code> script with <code>sudo nano /etc/rc.local</code> and enter the following before <code>exit 0</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Disable HDMI</span>
-/usr/bin/tvservice -o
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Disable HDMI</span>
+</span></span><span style="display:flex;"><span>/usr/bin/tvservice -o
+</span></span></code></pre></div></li>
 <li>
 <p>Reboot and check if the governor is set to performance with the following command:</p>
 <p><code>cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor</code></p>
@@ -427,11 +428,11 @@ declarations as well as the associated subroutines need to be commented out. Mor
 </li>
 <li>Open <code>bashrc</code> using <code>sudo nano ~/.bashrc</code> and add the following lines to the end of the file:</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export PATH<span style="color:#f92672">=</span>/opt/mpich/3.4.2/bin:$PATH
-export LD_LIBRARY_PATH<span style="color:#f92672">=</span>/opt/openblas/lib:$LD_LIBRARY_PATH
-export LIBRARY_PATH<span style="color:#f92672">=</span>/opt/openblas/lib:$LIBRARY_PATH
-export OPENBLAS_NUM_THREADS<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-</code></pre></div><h1 id="running-the-benchmark">Running the Benchmark<a hidden class="anchor" aria-hidden="true" href="#running-the-benchmark">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>/opt/mpich/3.4.2/bin:$PATH
+</span></span><span style="display:flex;"><span>export LD_LIBRARY_PATH<span style="color:#f92672">=</span>/opt/openblas/lib:$LD_LIBRARY_PATH
+</span></span><span style="display:flex;"><span>export LIBRARY_PATH<span style="color:#f92672">=</span>/opt/openblas/lib:$LIBRARY_PATH
+</span></span><span style="display:flex;"><span>export OPENBLAS_NUM_THREADS<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><h1 id="running-the-benchmark">Running the Benchmark<a hidden class="anchor" aria-hidden="true" href="#running-the-benchmark">#</a></h1>
 <h3 id="hpl-config-file">HPL Config File<a hidden class="anchor" aria-hidden="true" href="#hpl-config-file">#</a></h3>
 <p>First, an HPL config file needs to be created:</p>
 <ol>
@@ -561,30 +562,30 @@ This command combines all-in-one:</p>
 <p>[11] WikiChip LLC, Floating-Point Operations Per Second (FLOPS). [Online]. Available: <a href="https://en.wikichip.org/wiki/flops">https://en.wikichip.org/wiki/flops</a> (visited on 02/26/2022).</p>
 <p>[12] Arm Limited, Cortex-A72. [Online]. Available: <a href="https://developer.arm.com/ip-products/processors/cortex-a/cortex-a72">https://developer.arm.com/ip-products/processors/cortex-a/cortex-a72</a> (visited on 02/26/2022).</p>
 <p>[13] A. Frumusanu, ARM Reveals Cortex-A72 Architecture Details. [Online]. Available: <a href="https://www.anandtech.com/show/9184/arm-reveals-cortex-a72-architecture-details">https://www.anandtech.com/show/9184/arm-reveals-cortex-a72-architecture-details</a> (visited on 02/26/2022).</p>
-<section class="footnotes" role="doc-endnotes">
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
+<li id="fn:1">
 <p>This is just my naming for this parameter. If you know the official name, please send me an e-mail. 😃&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://dadul96.github.io/tags/raspberry-pi/">raspberry pi</a></li>
-      <li><a href="https://dadul96.github.io/tags/benchmark/">benchmark</a></li>
+      <li><a href="https://dadul96.github.io/tags/raspberry-pi/">Raspberry Pi</a></li>
+      <li><a href="https://dadul96.github.io/tags/benchmark/">Benchmark</a></li>
     </ul>
 <nav class="paginav">
   <a class="prev" href="https://dadul96.github.io/posts/stm32_usb_hid_mouse_jiggler/">
-    <span class="title">« Prev Page</span>
+    <span class="title">« Prev</span>
     <br>
     <span>STM32 USB HID Mouse Jiggler</span>
   </a>
   <a class="next" href="https://dadul96.github.io/posts/hugo_papermod_custom_home_info/">
-    <span class="title">Next Page »</span>
+    <span class="title">Next »</span>
     <br>
     <span>Hugo PaperMod: Custom Home-Info</span>
   </a>
@@ -595,11 +596,12 @@ This command combines all-in-one:</p>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2023 <a href="https://dadul96.github.io/">dadul96 blog</a></span>
+        <span>&copy; 2024 <a href="https://dadul96.github.io/">dadul96 blog</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
 <a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
