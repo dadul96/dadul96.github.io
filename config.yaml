@@ -1,0 +1,108 @@
+baseURL: https://dadul96.github.io/
+languageCode: en-us
+title: dadul96 blog
+theme: PaperMod
+
+
+markup:
+  goldmark:
+    extensions:
+      definitionList: true
+      footnote: true
+      linkify: true
+      strikethrough: true
+      table: true
+      taskList: true
+      typographer: true
+    parser:
+      attribute:
+        block: false
+        title: true
+      autoHeadingID: true
+      autoHeadingIDType: github
+    renderer:
+      hardWraps: false
+      unsafe: true
+      xhtml: false
+
+
+menu:
+  main:
+    - name: Archive
+      url: /archives/
+      weight: 1
+    - name: Categories
+      url: /categories/
+      weight: 2
+    - name: Tags
+      url: /tags/
+      weight: 3
+
+
+params:
+    defaultTheme: auto #automatically adjusts black or white theme to browser settings
+    
+    #-------------
+    description: "This blog is a collection of the thoughts, ideas, and projects (hardware and software) that I would like to share with the world wide web."
+    author: dadul96
+    keywords: [Blog, dadul96, Daniel, Programming, Coding, Software, Hardware, Electronics, 3D Printing]
+    env: production
+    enableRobotsTXT: false
+    
+    #-------------
+    homeInfoParams:
+        Title: Hi there, I'm Daniel. 👋
+        Content: >
+            <div>  <!--- profile picture and text --->
+                <p style="float: left; padding-right: 10px;">
+                    <img alt="emoji avatar of me" src="me_ar_sticker.webp" height="100px" width="100px">
+                </p>
+                <p>
+                    Everything technical gives me a lot of joy. Starting from <b>A</b> like <i>Artificial Intelligence</i> to <b>Z</b> like <i>Zener Diode</i> - I dig that stuff! 
+                    This blog is a collection of the thoughts, ideas, and projects (hardware and software) that I would like to share with the world wide web.
+                </p>
+            </div>
+            
+            <div> <!--- social icons start here --->
+                <a href="https://github.com/dadul96">
+                    <p style="float: left; padding-top: 20px; padding-right: 15px;">
+                        <img src="github_icon.webp" width="32" height="32">
+                    </p>
+                </a>
+                <a href="mailto:daniel.duller@gmx.net">
+                    <p style="float: left; padding-top: 20px; padding-right: 15px;">
+                        <img src="email_icon.webp" width="32" height="32">
+                    </p>
+                </a>
+                <a href="https://www.thingiverse.com/dadul96/designs">
+                    <p style="float: left; padding-top: 20px; padding-right: 15px;">
+                        <img src="thingiverse_icon.webp" width="32" height="32">
+                    </p>
+                </a>
+                <a href="https://www.printables.com/social/192589-dadul96/about">
+                    <p style="float: left; padding-top: 20px; padding-right: 15px;">
+                        <img src="printables_icon.webp" width="32" height="32">
+                    </p>
+                </a>
+                <a href="https://dadul96.github.io/index.xml">
+                    <p style="float: left; padding-top: 20px; padding-right: 15px;">
+                        <img src="rss_icon.webp" width="32" height="32">
+                    </p>
+                </a>
+            </div>
+
+    #-------------
+    outputs:
+        home:
+          - HTML
+          - RSS
+          - JSON
+    
+    #-------------
+    ShowReadingTime: true
+    ShowPostNavLinks: true
+
+    #-------------
+    cover:
+        responsiveImages: true
+        
