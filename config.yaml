@@ -49,6 +49,7 @@ params:
     env: production
     enableRobotsTXT: false
     timeZone: Europe/Vienna
+    comments: true
     
     #-------------
     homeInfoParams:
@@ -106,4 +107,3 @@ params:
     #-------------
     cover:
         responsiveImages: true
-        
