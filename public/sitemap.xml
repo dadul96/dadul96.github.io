@@ -2,6 +2,39 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://dadul96.github.io/tags/blog/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/categories/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/coding/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/categories/coding/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/giscus/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/hugo/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/papermod/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/posts/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/</loc>
+    <lastmod>2024-12-20T19:04:00+01:00</lastmod>
+  </url><url>
     <loc>https://dadul96.github.io/tags/3d-design/</loc>
     <lastmod>2022-09-18T15:15:03+01:00</lastmod>
   </url><url>
@@ -11,26 +44,11 @@
     <loc>https://dadul96.github.io/categories/3d-printing/</loc>
     <lastmod>2022-09-18T15:15:03+01:00</lastmod>
   </url><url>
-    <loc>https://dadul96.github.io/categories/</loc>
-    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/</loc>
-    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
-  </url><url>
     <loc>https://dadul96.github.io/posts/headlamp_on_a_bike/</loc>
     <lastmod>2022-09-18T15:15:03+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/tags/photogrammetry/</loc>
     <lastmod>2022-09-18T15:15:03+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/posts/</loc>
-    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/</loc>
-    <lastmod>2022-09-18T15:15:03+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/coding/</loc>
-    <lastmod>2022-08-18T18:08:00+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/tags/electronics/</loc>
     <lastmod>2022-08-18T18:08:00+01:00</lastmod>
@@ -62,19 +80,7 @@
     <loc>https://dadul96.github.io/categories/raspberry-pi/</loc>
     <lastmod>2022-02-27T14:28:06+01:00</lastmod>
   </url><url>
-    <loc>https://dadul96.github.io/tags/blog/</loc>
-    <lastmod>2022-02-19T16:39:04+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/categories/coding/</loc>
-    <lastmod>2022-02-19T16:39:04+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/hugo/</loc>
-    <lastmod>2022-02-19T16:39:04+01:00</lastmod>
-  </url><url>
     <loc>https://dadul96.github.io/posts/hugo_papermod_custom_home_info/</loc>
-    <lastmod>2022-02-19T16:39:04+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/papermod/</loc>
     <lastmod>2022-02-19T16:39:04+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/posts/start_and_finish_a_project/</loc>

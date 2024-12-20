@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>How to add a Comment Section to your Hugo Papermod Blog using giscus | dadul96 blog</title>
+<meta name="keywords" content="hugo, papermod, giscus, blog, coding">
+<meta name="description" content="A guide on how to set up a comment section in your Hugo PaperMod blog using giscus.">
+<meta name="author" content="dadul96">
+<link rel="canonical" href="https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://dadul96.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://dadul96.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://dadul96.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://dadul96.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://dadul96.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/">
+  <meta property="og:site_name" content="dadul96 blog">
+  <meta property="og:title" content="How to add a Comment Section to your Hugo Papermod Blog using giscus">
+  <meta property="og:description" content="A guide on how to set up a comment section in your Hugo PaperMod blog using giscus.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-12-20T19:04:00+01:00">
+    <meta property="article:modified_time" content="2024-12-20T19:04:00+01:00">
+    <meta property="article:tag" content="Hugo">
+    <meta property="article:tag" content="Papermod">
+    <meta property="article:tag" content="Giscus">
+    <meta property="article:tag" content="Blog">
+    <meta property="article:tag" content="Coding">
+    <meta property="og:image" content="https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/images/cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/images/cover.webp">
+<meta name="twitter:title" content="How to add a Comment Section to your Hugo Papermod Blog using giscus">
+<meta name="twitter:description" content="A guide on how to set up a comment section in your Hugo PaperMod blog using giscus.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://dadul96.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "How to add a Comment Section to your Hugo Papermod Blog using giscus",
+      "item": "https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to add a Comment Section to your Hugo Papermod Blog using giscus",
+  "name": "How to add a Comment Section to your Hugo Papermod Blog using giscus",
+  "description": "A guide on how to set up a comment section in your Hugo PaperMod blog using giscus.\n",
+  "keywords": [
+    "hugo", "papermod", "giscus", "blog", "coding"
+  ],
+  "articleBody": "A guide on how to set up a comment section in your Hugo PaperMod blog using giscus.\nVersions used At the time of writing this article, I’m using the following versions:\nHugo: v0.139.4 PaperMod: v8.0 giscus: (is rolling release) last changelog entry on 2024-11-28 Next Steps depending on your PaperMod “Installation” Depending on how you added PaperMod to your repo we may need to make some changes.\nAditya Telange discusses in the installation instructions for PaperMod four ways to add this theme to your Hugo blog:\n“Git Clone” and “Download and unzip”\nIf you have chosen this approach, you are lucky because you can immediately start modifying the code. However, you have to apply these changes again, when you update your PaperMod theme to a newer version. You can continue reading the chapter Modifying comments.html.\n“Git Submodule (recommended)”\nUsers that included PaperMod using this method need to make some changes in order to be able to push the commits to their repo on GitHub. Please read the chapter Forked Git Submodule before continuing with chapter Modifying comments.html.\n“Hugo module”\nI guess you can do the same as for “Git Clone” and “Download and unzip” but I am not sure how the Hugo module update command behaves with local changes applied. It probably will just overwrite it. You can continue reading the chapter Modifying comments.html.\nForked Git Submodule The issue of having the original PaperMod repo as a submodule in your blog repo is that we need to make some changes to the theme and push the commit to GitHub. But since we are tracking the original PaperMod repo we can not push our changes to the submodule.\nThe solution to this problem is to create a fork of the PaperMod repo and tell git that we now want to track this remote in our submodule. I recommend to perform the following steps:\nCreate a fork of the original PaperMod repo. Create a branch called something like add_giscus. In your repo folder run the following commands: git submodule set-url themes/PaperMod https://github.com//hugo-PaperMod - this will track the forked repo git submodule update --remote --recursive - this will update the submodule to take the content from your forked repo Navigate to your submodule folder (cd themes/PaperMod) and run the following command: git checkout add_giscus - checks out the branch we have created before Now we are ready to make our modifications.\nModifying comments.html In the folder themes/PaperMod/layouts/partials/ you will find the file comments.html. Open this file with your favorite text editor (I like micro) and delete the stuff that’s already inside (there should have been just some comments).\nNow we need to place the code for giscus here. On the giscus page, there is a nice config tool that generates the code for you. It will look something like this:\n\u003cscript src=\"https://giscus.app/client.js\" data-repo=\"[ENTER REPO HERE]\" data-repo-id=\"[ENTER REPO ID HERE]\" data-category=\"[ENTER CATEGORY NAME HERE]\" data-category-id=\"[ENTER CATEGORY ID HERE]\" data-mapping=\"pathname\" data-strict=\"0\" data-reactions-enabled=\"1\" data-emit-metadata=\"0\" data-input-position=\"bottom\" data-theme=\"transparent_dark\" data-lang=\"en\" crossorigin=\"anonymous\" async\u003e \u003c/script\u003e I highly recommend the “transparent_dark”-theme, as it will work with both the dark and the bright blog theme of Hugo PaperMod.\nIn case you don’t have PaperMod added as a submodule you can continue with the next chapter. Otherwise, you would still need to commit and push the changes from the submodule to your PaperMod fork repo.\nEnable the Comments Feature in the Hugo Config File In the Hugo YAML config you would just add comments: true to the params-section. Of course, you need to adjust the syntax in case you use a TOML or JSON config file.\nEnable Discussions for Your GitHub Repo You can enable discussions under: Settings → General → Features → Discussions\nInstall the giscus App in GitHub You can find the giscus app here.\nPublishing Commit and push all your changes from the blog repo to GitHub. In case you use the submodule approach, make sure that you also push this new version of the submodule to the blog repo.\nLast Words regarding Updating PaperMod in the Future Users that use the submodule method can follow this approach: Sync the master branch of your fork with the original repo. Merge the master branch in your add_giscus branch. Update your submodule using git submodule update --remote --recursive. Make sure that locally you are still in your add_giscus branch. All other users need to follow this approach: Store the code from the comments.html file somewhere. Perform your update. Apply the code back to the comments.html file. ",
+  "wordCount" : "743",
+  "inLanguage": "en",
+  "image":"https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/images/cover.webp","datePublished": "2024-12-20T19:04:00+01:00",
+  "dateModified": "2024-12-20T19:04:00+01:00",
+  "author":{
+    "@type": "Person",
+    "name": "dadul96"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dadul96 blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dadul96.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://dadul96.github.io/" accesskey="h" title="dadul96 blog (Alt + H)">dadul96 blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://dadul96.github.io/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://dadul96.github.io/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://dadul96.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      How to add a Comment Section to your Hugo Papermod Blog using giscus
+    </h1>
+    <div class="post-meta"><span title='2024-12-20 19:04:00 +0100 CET'>December 20, 2024</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;dadul96
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" src="https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/images/cover.webp" alt="cover picture: example of a giscus comment">
+        
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#versions-used" aria-label="Versions used">Versions used</a></li>
+                <li>
+                    <a href="#next-steps-depending-on-your-papermod-installation" aria-label="Next Steps depending on your PaperMod &ldquo;Installation&rdquo;">Next Steps depending on your PaperMod &ldquo;Installation&rdquo;</a></li>
+                <li>
+                    <a href="#forked-git-submodule" aria-label="Forked Git Submodule">Forked Git Submodule</a></li>
+                <li>
+                    <a href="#modifying-commentshtml" aria-label="Modifying comments.html">Modifying comments.html</a></li>
+                <li>
+                    <a href="#enable-the-comments-feature-in-the-hugo-config-file" aria-label="Enable the Comments Feature in the Hugo Config File">Enable the Comments Feature in the Hugo Config File</a></li>
+                <li>
+                    <a href="#enable-discussions-for-your-github-repo" aria-label="Enable Discussions for Your GitHub Repo">Enable Discussions for Your GitHub Repo</a></li>
+                <li>
+                    <a href="#install-the-giscus-app-in-github" aria-label="Install the giscus App in GitHub">Install the giscus App in GitHub</a></li>
+                <li>
+                    <a href="#publishing" aria-label="Publishing">Publishing</a></li>
+                <li>
+                    <a href="#last-words-regarding-updating-papermod-in-the-future" aria-label="Last Words regarding Updating PaperMod in the Future">Last Words regarding Updating PaperMod in the Future</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><em>A guide on how to set up a comment section in your <a href="https://gohugo.io/">Hugo</a> <a href="https://github.com/adityatelange/hugo-PaperMod">PaperMod</a> blog using <a href="https://github.com/giscus/giscus">giscus</a>.</em></p>
+<h2 id="versions-used">Versions used<a hidden class="anchor" aria-hidden="true" href="#versions-used">#</a></h2>
+<p>At the time of writing this article, I&rsquo;m using the following versions:</p>
+<ul>
+<li>Hugo: v0.139.4</li>
+<li>PaperMod: v8.0</li>
+<li>giscus: (is rolling release) last <a href="https://github.com/giscus/giscus/blob/main/CHANGELOG.md">changelog</a> entry on 2024-11-28</li>
+</ul>
+<h2 id="next-steps-depending-on-your-papermod-installation">Next Steps depending on your PaperMod &ldquo;Installation&rdquo;<a hidden class="anchor" aria-hidden="true" href="#next-steps-depending-on-your-papermod-installation">#</a></h2>
+<p>Depending on how you added PaperMod to your repo we may need to make some changes.</p>
+<p><a href="https://github.com/adityatelange">Aditya Telange</a> discusses in the <a href="https://github.com/adityatelange/hugo-PaperMod/wiki/Installation">installation instructions for PaperMod</a> four ways to add this theme to your Hugo blog:</p>
+<ul>
+<li>
+<p><strong>&ldquo;Git Clone&rdquo; and &ldquo;Download and unzip&rdquo;</strong></p>
+<p>If you have chosen this approach, you are lucky because you can immediately start modifying the code. However, you have to apply these changes again, when you update your PaperMod theme to a newer version. You can continue reading the chapter <a href="./#modifying-commentshtml"><em>Modifying <code>comments.html</code></em></a>.</p>
+</li>
+<li>
+<p><strong>&ldquo;Git Submodule (recommended)&rdquo;</strong></p>
+<p>Users that included PaperMod using this method need to make some changes in order to be able to push the commits to their repo on GitHub.
+Please read the chapter <a href="./#forked-git-submodule"><em>Forked Git Submodule</em></a> before continuing with chapter <a href="./#modifying-commentshtml"><em>Modifying <code>comments.html</code></em></a>.</p>
+</li>
+<li>
+<p><strong>&ldquo;Hugo module&rdquo;</strong></p>
+<p>I guess you can do the same as for &ldquo;Git Clone&rdquo; and &ldquo;Download and unzip&rdquo; but I am not sure how the Hugo <a href="https://gohugo.io/hugo-modules/use-modules/#update-all-modules">module update command</a> behaves with local changes applied. It probably will just overwrite it. You can continue reading the chapter <a href="./#modifying-commentshtml"><em>Modifying <code>comments.html</code></em></a>.</p>
+</li>
+</ul>
+<h2 id="forked-git-submodule">Forked Git Submodule<a hidden class="anchor" aria-hidden="true" href="#forked-git-submodule">#</a></h2>
+<p>The issue of having the <a href="https://github.com/adityatelange/hugo-PaperMod">original PaperMod repo</a> as a submodule in your blog repo is that we need to make some changes to the theme and push the commit to GitHub. But since we are tracking the original PaperMod repo we can not push our changes to the submodule.</p>
+<p>The solution to this problem is to create a fork of the PaperMod repo and tell git that we now want to track this remote in our submodule. I recommend to perform the following steps:</p>
+<ol>
+<li>Create a fork of the original PaperMod repo.</li>
+<li>Create a branch called something like <code>add_giscus</code>.</li>
+<li>In your repo folder run the following commands:
+<ul>
+<li><code>git submodule set-url themes/PaperMod https://github.com/&lt;YOUR_USERNAME&gt;/hugo-PaperMod</code> - this will track the forked repo</li>
+<li><code>git submodule update --remote --recursive</code> - this will update the submodule to take the content from your forked repo</li>
+</ul>
+</li>
+<li>Navigate to your submodule folder (<code>cd themes/PaperMod</code>) and run the following command:
+<ul>
+<li><code>git checkout add_giscus</code> - checks out the branch we have created before</li>
+</ul>
+</li>
+</ol>
+<p>Now we are ready to make our modifications.</p>
+<h2 id="modifying-commentshtml">Modifying <code>comments.html</code><a hidden class="anchor" aria-hidden="true" href="#modifying-commentshtml">#</a></h2>
+<p>In the folder <code>themes/PaperMod/layouts/partials/</code> you will find the file <code>comments.html</code>. Open this file with your favorite text editor (I like <a href="https://micro-editor.github.io/">micro</a>) and delete the stuff that&rsquo;s already inside (there should have been just some comments).</p>
+<p>Now we need to place the code for giscus here. On the <a href="https://giscus.app/">giscus page</a>, there is a nice config tool that generates the code for you. It will look something like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://giscus.app/client.js&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-repo</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[ENTER REPO HERE]&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-repo-id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[ENTER REPO ID HERE]&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-category</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[ENTER CATEGORY NAME HERE]&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-category-id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[ENTER CATEGORY ID HERE]&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-mapping</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pathname&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-strict</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-reactions-enabled</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-emit-metadata</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-input-position</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bottom&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-theme</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;transparent_dark&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">data-lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">crossorigin</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;anonymous&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">async</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p><strong>I highly recommend the &ldquo;transparent_dark&rdquo;-theme, as it will work with both the dark and the bright blog theme of Hugo PaperMod.</strong></p>
+<p>In case you don&rsquo;t have PaperMod added as a submodule you can continue with the next chapter. Otherwise, you would still need to commit and push the changes from the submodule to your PaperMod fork repo.</p>
+<h2 id="enable-the-comments-feature-in-the-hugo-config-file">Enable the Comments Feature in the Hugo Config File<a hidden class="anchor" aria-hidden="true" href="#enable-the-comments-feature-in-the-hugo-config-file">#</a></h2>
+<p>In the Hugo YAML config you would just add <code>comments: true</code> to the <code>params</code>-section. Of course, you need to adjust the syntax in case you use a TOML or JSON config file.</p>
+<h2 id="enable-discussions-for-your-github-repo">Enable Discussions for Your GitHub Repo<a hidden class="anchor" aria-hidden="true" href="#enable-discussions-for-your-github-repo">#</a></h2>
+<p>You can enable discussions under: Settings → General → Features → Discussions</p>
+<h2 id="install-the-giscus-app-in-github">Install the giscus App in GitHub<a hidden class="anchor" aria-hidden="true" href="#install-the-giscus-app-in-github">#</a></h2>
+<p>You can find the <a href="https://github.com/apps/giscus">giscus app here</a>.</p>
+<h2 id="publishing">Publishing<a hidden class="anchor" aria-hidden="true" href="#publishing">#</a></h2>
+<p>Commit and push all your changes from the blog repo to GitHub. In case you use the submodule approach, make sure that you also push this new version of the submodule to the blog repo.</p>
+<h2 id="last-words-regarding-updating-papermod-in-the-future">Last Words regarding Updating PaperMod in the Future<a hidden class="anchor" aria-hidden="true" href="#last-words-regarding-updating-papermod-in-the-future">#</a></h2>
+<ul>
+<li>Users that use the submodule method can follow this approach:
+<ol>
+<li>Sync the <code>master</code> branch of your fork with the original repo.</li>
+<li>Merge the <code>master</code> branch in your <code>add_giscus</code> branch.</li>
+<li>Update your submodule using <code>git submodule update --remote --recursive</code>.</li>
+<li>Make sure that locally you are still in your <code>add_giscus</code> branch.</li>
+</ol>
+</li>
+<li>All other users need to follow this approach:
+<ol>
+<li>Store the code from the <code>comments.html</code> file somewhere.</li>
+<li>Perform your update.</li>
+<li>Apply the code back to the <code>comments.html</code> file.</li>
+</ol>
+</li>
+</ul>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://dadul96.github.io/tags/hugo/">Hugo</a></li>
+      <li><a href="https://dadul96.github.io/tags/papermod/">Papermod</a></li>
+      <li><a href="https://dadul96.github.io/tags/giscus/">Giscus</a></li>
+      <li><a href="https://dadul96.github.io/tags/blog/">Blog</a></li>
+      <li><a href="https://dadul96.github.io/tags/coding/">Coding</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://dadul96.github.io/posts/headlamp_on_a_bike/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Mounting a Headlamp on a Mountain Bike</span>
+  </a>
+</nav>
+
+  </footer><script src="https://giscus.app/client.js"
+        data-repo="dadul96/dadul96.github.io"
+        data-repo-id="R_kgDOGzFyKw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOGzFyK84ClYDq"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="transparent_dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://dadul96.github.io/">dadul96 blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
