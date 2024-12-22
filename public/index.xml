@@ -6,8 +6,15 @@
     <description>Recent content on dadul96 blog</description>
     <generator>Hugo -- 0.139.4</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Dec 2024 19:04:00 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 22 Dec 2024 20:48:00 +0100</lastBuildDate>
     <atom:link href="https://dadul96.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Installing Nvidia Drivers on Debian Bookworm</title>
+      <link>https://dadul96.github.io/posts/nvidia_driver_on_debian_bookworm/</link>
+      <pubDate>Sun, 22 Dec 2024 20:48:00 +0100</pubDate>
+      <guid>https://dadul96.github.io/posts/nvidia_driver_on_debian_bookworm/</guid>
+      <description>&lt;p&gt;&lt;em&gt;A guide on how to install non-free Nvidia drivers on Debian Bookworm.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>How to add a Comment Section to your Hugo Papermod Blog using giscus</title>
       <link>https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/</link>
