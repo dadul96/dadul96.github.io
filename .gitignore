@@ -1,0 +1,2 @@
+# ignore ALL .xfc files (GIMP file format)
+*.xfc
