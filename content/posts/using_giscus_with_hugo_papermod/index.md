@@ -1,5 +1,5 @@
 ---
-title: "How to add a Comment Section to your Hugo Papermod Blog using giscus"
+title: "How to add a Comment Section to your Hugo PaperMod Blog using giscus"
 date: 2024-12-20T19:04:00+01:00
 draft: false
 categories: [coding]
