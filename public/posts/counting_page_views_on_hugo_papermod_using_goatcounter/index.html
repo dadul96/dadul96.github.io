@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>How to count Page Views on your Hugo PaperMod Blog using GoatCounter | dadul96 blog</title>
+<meta name="keywords" content="hugo, papermod, goatcounter, blog, coding">
+<meta name="description" content="A guide on how to count Page Views on your Hugo PaperMod blog using GoatCounter.">
+<meta name="author" content="dadul96">
+<link rel="canonical" href="https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://dadul96.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://dadul96.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://dadul96.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://dadul96.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://dadul96.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/">
+  <meta property="og:site_name" content="dadul96 blog">
+  <meta property="og:title" content="How to count Page Views on your Hugo PaperMod Blog using GoatCounter">
+  <meta property="og:description" content="A guide on how to count Page Views on your Hugo PaperMod blog using GoatCounter.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-01-01T15:51:00+01:00">
+    <meta property="article:modified_time" content="2025-01-01T15:51:00+01:00">
+    <meta property="article:tag" content="Hugo">
+    <meta property="article:tag" content="Papermod">
+    <meta property="article:tag" content="Goatcounter">
+    <meta property="article:tag" content="Blog">
+    <meta property="article:tag" content="Coding">
+    <meta property="og:image" content="https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/images/cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/images/cover.webp">
+<meta name="twitter:title" content="How to count Page Views on your Hugo PaperMod Blog using GoatCounter">
+<meta name="twitter:description" content="A guide on how to count Page Views on your Hugo PaperMod blog using GoatCounter.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://dadul96.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "How to count Page Views on your Hugo PaperMod Blog using GoatCounter",
+      "item": "https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to count Page Views on your Hugo PaperMod Blog using GoatCounter",
+  "name": "How to count Page Views on your Hugo PaperMod Blog using GoatCounter",
+  "description": "A guide on how to count Page Views on your Hugo PaperMod blog using GoatCounter.\n",
+  "keywords": [
+    "hugo", "papermod", "goatcounter", "blog", "coding"
+  ],
+  "articleBody": "A guide on how to count Page Views on your Hugo PaperMod blog using GoatCounter.\nWhy GoatCounter? There are many reasons why I think GoatCounter is a good solution for my needs. Here are just a few of them:\nIt’s FOSS (Free Open Source Software). You can self-host it, but it’s not necessary. It does not track users with unique identifiers and therefore does not need a GDPR notice. It’s super easy to add to your page. It offers JavaScript tracking with extended tracking information, but also non-JavaScript pixel-based tracking with reduced tracking information. My initial goal was to keep this blog JavaScript-free. Unfortunately, I had to make an excuse for the giscuss comment section. Nevertheless, I don’t want to spam watchers of this page with tons of scripts and therefore I chose the GoatCounter pixel-tracking approach over the JavaScript approach.\nCaveats of using GoatCounter The websites goatcounter.com and/or gc.zgo.at seem to be blocked by many add-blockers and therefore not ALL page visits are tracked. GoatCounter ignores Do Not Track. (Here are the author’s arguments against DNT.) Versions used At the time of writing this article, I’m using the following versions:\nHugo: v0.139.4 PaperMod: v8.0 GoatCounter: v2.5.0 Before starting In this guide, I assume you have already created an account on www.goatcounter.com.\n⚠️ Depending on how you added PaperMod to your Hugo repo the next steps might differ. I have already explained the differences in an article before. Mainly, the sections Next Steps depending on your PaperMod “Installation”, Forked Git Submodule, and Last Words regarding Updating PaperMod in the Future are interesting here.\nAdd analytics.html In the folder themes/PaperMod/layouts/partials/ you need to add the file analytics.html. Depending on your preference, you can either add this code for using the JavaScript-tracking:\n\u003cscript data-goatcounter=\"https://MYCODE.goatcounter.com/count\" async src=\"//gc.zgo.at/count.js\"\u003e\u003c/script\u003e \u003cnoscript\u003e \u003cimg src=\"https://MYCODE.goatcounter.com/count?p={{ .Path | safeURL }}\"\u003e \u003c/noscript\u003e or as I did, you can just use the following line for pixel-tracking:\n\u003cimg src=\"https://MYCODE.goatcounter.com/count?p={{ .Path | safeURL }}\"\u003e ⚠️ Don’t forget to replace the string MYCODE with your actual code that you selected during account creation.\nModify baseof.html In the folder themes/PaperMod/layouts/_default/ you need to modify the file baseof.html. This file acts as the base for all our pages.\nWe need to add the line {{ partial \"analytics.html\" . .Path -}} below and above our footer. See the highlighted line below:\n\u003cbody class=\" {{- if (or (ne .Kind `page` ) (eq .Layout `archives`) (eq .Layout `search`)) -}} {{- print \"list\" -}} {{- end -}} {{- if eq site.Params.defaultTheme `dark` -}} {{- print \" dark\" }} {{- end -}} \" id=\"top\"\u003e {{- partialCached \"header.html\" . .Page -}} \u003cmain class=\"main\"\u003e {{- block \"main\" . }}{{ end }} \u003c/main\u003e {{ partial \"analytics.html\" . .Path -}} {{ partialCached \"footer.html\" . .Layout .Kind (.Param \"hideFooter\") (.Param \"ShowCodeCopyButtons\") -}} \u003c/body\u003e Publishing Commit and push all your changes from the blog repo to GitHub. If you use the submodule approach, make sure that you also push this new version of the submodule to the blog repo.\nView Analytics To view the analytics of your website you need to open the GoatCounter-dashboard and sign in with your account credentials. Here the link: https://MYCODE.goatcounter.com/\n",
+  "wordCount" : "519",
+  "inLanguage": "en",
+  "image":"https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/images/cover.webp","datePublished": "2025-01-01T15:51:00+01:00",
+  "dateModified": "2025-01-01T15:51:00+01:00",
+  "author":{
+    "@type": "Person",
+    "name": "dadul96"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "dadul96 blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dadul96.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://dadul96.github.io/" accesskey="h" title="dadul96 blog (Alt + H)">dadul96 blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://dadul96.github.io/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://dadul96.github.io/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://dadul96.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      How to count Page Views on your Hugo PaperMod Blog using GoatCounter
+    </h1>
+    <div class="post-meta"><span title='2025-01-01 15:51:00 +0100 CET'>January 1, 2025</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;dadul96
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" src="https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/images/cover.webp" alt="cover picture: hugo papermod blog using goatcounter">
+        <p>Sources: <a href="https://www.goatcounter.com/">GoatCounter Logo</a>, <a href="https://gohugo.io/">Hugo Logo</a></p>
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#why-goatcounter" aria-label="Why GoatCounter?">Why GoatCounter?</a></li>
+                <li>
+                    <a href="#caveats-of-using-goatcounter" aria-label="Caveats of using GoatCounter">Caveats of using GoatCounter</a></li>
+                <li>
+                    <a href="#versions-used" aria-label="Versions used">Versions used</a></li>
+                <li>
+                    <a href="#before-starting" aria-label="Before starting">Before starting</a></li>
+                <li>
+                    <a href="#add-analyticshtml" aria-label="Add analytics.html">Add analytics.html</a></li>
+                <li>
+                    <a href="#modify-baseofhtml" aria-label="Modify baseof.html">Modify baseof.html</a></li>
+                <li>
+                    <a href="#publishing" aria-label="Publishing">Publishing</a></li>
+                <li>
+                    <a href="#view-analytics" aria-label="View Analytics">View Analytics</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><em>A guide on how to count Page Views on your <a href="https://gohugo.io/">Hugo</a> <a href="https://github.com/adityatelange/hugo-PaperMod">PaperMod</a> blog using <a href="https://www.goatcounter.com/">GoatCounter</a>.</em></p>
+<h2 id="why-goatcounter">Why GoatCounter?<a hidden class="anchor" aria-hidden="true" href="#why-goatcounter">#</a></h2>
+<p>There are many reasons why I think GoatCounter is a good solution for my needs. Here are just a few of them:</p>
+<ul>
+<li>It&rsquo;s FOSS (Free Open Source Software).</li>
+<li>You can self-host it, but it&rsquo;s not necessary.</li>
+<li>It does not track users with unique identifiers and therefore does not need a GDPR notice.</li>
+<li>It&rsquo;s super easy to add to your page.</li>
+<li>It offers JavaScript tracking with extended tracking information, but also non-JavaScript pixel-based tracking with reduced tracking information.</li>
+</ul>
+<p>My initial goal was to keep this blog JavaScript-free. Unfortunately, I had to make an excuse for the <a href="/posts/using_giscus_with_hugo_papermod/">giscuss comment section</a>. Nevertheless, I don&rsquo;t want to spam watchers of this page with tons of scripts and therefore I chose the GoatCounter pixel-tracking approach over the JavaScript approach.</p>
+<h2 id="caveats-of-using-goatcounter">Caveats of using GoatCounter<a hidden class="anchor" aria-hidden="true" href="#caveats-of-using-goatcounter">#</a></h2>
+<ul>
+<li>The websites <code>goatcounter.com</code> and/or <code>gc.zgo.at</code> seem to be blocked by many add-blockers and therefore not ALL page visits are tracked.</li>
+<li>GoatCounter ignores Do Not Track. (Here are the author&rsquo;s <a href="https://www.arp242.net/dnt.html">arguments against DNT</a>.)</li>
+</ul>
+<h2 id="versions-used">Versions used<a hidden class="anchor" aria-hidden="true" href="#versions-used">#</a></h2>
+<p>At the time of writing this article, I&rsquo;m using the following versions:</p>
+<ul>
+<li>Hugo: v0.139.4</li>
+<li>PaperMod: v8.0</li>
+<li>GoatCounter: v2.5.0</li>
+</ul>
+<h2 id="before-starting">Before starting<a hidden class="anchor" aria-hidden="true" href="#before-starting">#</a></h2>
+<p>In this guide, I assume you have already created an account on <a href="https://www.goatcounter.com/">www.goatcounter.com</a>.</p>
+<blockquote>
+<p>⚠️ Depending on how you added PaperMod to your Hugo repo the next steps might differ. I have already explained the differences in an <a href="/posts/using_giscus_with_hugo_papermod/">article</a> before. Mainly, the sections <a href="/posts/using_giscus_with_hugo_papermod/#next-steps-depending-on-your-papermod-installation"><em>Next Steps depending on your PaperMod &ldquo;Installation&rdquo;</em></a>, <a href="/posts/using_giscus_with_hugo_papermod/#forked-git-submodule"><em>Forked Git Submodule</em></a>, and <a href="/posts/using_giscus_with_hugo_papermod/#last-words-regarding-updating-papermod-in-the-future"><em>Last Words regarding Updating PaperMod in the Future</em></a> are interesting here.</p>
+</blockquote>
+<h2 id="add-analyticshtml">Add <code>analytics.html</code><a hidden class="anchor" aria-hidden="true" href="#add-analyticshtml">#</a></h2>
+<p>In the folder <code>themes/PaperMod/layouts/partials/</code> you need to add the file <code>analytics.html</code>. Depending on your preference, you can either add this code for using the JavaScript-tracking:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">data-goatcounter</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://MYCODE.goatcounter.com/count&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">async</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;//gc.zgo.at/count.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">noscript</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://MYCODE.goatcounter.com/count?p={{ .Path | safeURL }}&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">noscript</span>&gt;
+</span></span></code></pre></div><p>or as I did, you can just use the following line for pixel-tracking:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://MYCODE.goatcounter.com/count?p={{ .Path | safeURL }}&#34;</span>&gt;
+</span></span></code></pre></div><blockquote>
+<p>⚠️ Don&rsquo;t forget to replace the string <code>MYCODE</code> with your actual code that you selected during account creation.</p>
+</blockquote>
+<h2 id="modify-baseofhtml">Modify <code>baseof.html</code><a hidden class="anchor" aria-hidden="true" href="#modify-baseofhtml">#</a></h2>
+<p>In the folder <code>themes/PaperMod/layouts/_default/</code> you need to modify the file <code>baseof.html</code>. This file acts as the base for all our pages.</p>
+<p>We need to add the line <code>{{ partial &quot;analytics.html&quot; . .Path -}}</code> below <code>&lt;/main&gt;</code> and above our <em>footer</em>. See the highlighted line below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-go-html-template" data-lang="go-html-template"><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#75715e">{{-</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">or</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">ne</span> <span style="color:#a6e22e">.Kind</span> <span style="color:#e6db74">`page`</span> <span style="color:#f92672">)</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">eq</span> <span style="color:#a6e22e">.Layout</span> <span style="color:#e6db74">`archives`</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">eq</span> <span style="color:#a6e22e">.Layout</span> <span style="color:#e6db74">`search`</span><span style="color:#f92672">))</span> <span style="color:#75715e">-}}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#75715e">{{-</span> <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;list&#34;</span> <span style="color:#75715e">-}}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#75715e">{{-</span> <span style="color:#66d9ef">end</span> <span style="color:#75715e">-}}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#75715e">{{-</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">eq</span> <span style="color:#a6e22e">site</span><span style="color:#a6e22e">.Params.defaultTheme</span> <span style="color:#e6db74">`dark`</span> <span style="color:#75715e">-}}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#75715e">{{-</span> <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34; dark&#34;</span> <span style="color:#75715e">}}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#75715e">{{-</span> <span style="color:#66d9ef">end</span> <span style="color:#75715e">-}}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;top&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">{{-</span> <span style="color:#a6e22e">partialCached</span> <span style="color:#e6db74">&#34;header.html&#34;</span> <span style="color:#a6e22e">.</span> <span style="color:#a6e22e">.Page</span> <span style="color:#75715e">-}}</span>
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">main</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">{{-</span> <span style="color:#66d9ef">block</span> <span style="color:#e6db74">&#34;main&#34;</span> <span style="color:#a6e22e">.</span> <span style="color:#75715e">}}{{</span> <span style="color:#66d9ef">end</span> <span style="color:#75715e">}}</span>
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">main</span>&gt;
+</span></span><span style="display:flex; background-color:#3c3d38"><span>    <span style="color:#75715e">{{</span> <span style="color:#a6e22e">partial</span> <span style="color:#e6db74">&#34;analytics.html&#34;</span> <span style="color:#a6e22e">.</span> <span style="color:#a6e22e">.Path</span> <span style="color:#75715e">-}}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">{{</span> <span style="color:#a6e22e">partialCached</span> <span style="color:#e6db74">&#34;footer.html&#34;</span> <span style="color:#a6e22e">.</span> <span style="color:#a6e22e">.Layout</span> <span style="color:#a6e22e">.Kind</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">.Param</span> <span style="color:#e6db74">&#34;hideFooter&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span><span style="color:#a6e22e">.Param</span> <span style="color:#e6db74">&#34;ShowCodeCopyButtons&#34;</span><span style="color:#f92672">)</span> <span style="color:#75715e">-}}</span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span></code></pre></div><h2 id="publishing">Publishing<a hidden class="anchor" aria-hidden="true" href="#publishing">#</a></h2>
+<p>Commit and push all your changes from the blog repo to GitHub. If you use the submodule approach, make sure that you also push this new version of the submodule to the blog repo.</p>
+<h2 id="view-analytics">View Analytics<a hidden class="anchor" aria-hidden="true" href="#view-analytics">#</a></h2>
+<p>To view the analytics of your website you need to open the GoatCounter-dashboard and sign in with your account credentials. Here the link: <code>https://MYCODE.goatcounter.com/</code></p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://dadul96.github.io/tags/hugo/">Hugo</a></li>
+      <li><a href="https://dadul96.github.io/tags/papermod/">Papermod</a></li>
+      <li><a href="https://dadul96.github.io/tags/goatcounter/">Goatcounter</a></li>
+      <li><a href="https://dadul96.github.io/tags/blog/">Blog</a></li>
+      <li><a href="https://dadul96.github.io/tags/coding/">Coding</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://dadul96.github.io/posts/nvidia_driver_on_debian_bookworm/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Installing Nvidia Drivers on Debian Bookworm</span>
+  </a>
+</nav>
+
+  </footer><script src="https://giscus.app/client.js"
+        data-repo="dadul96/dadul96.github.io"
+        data-repo-id="R_kgDOGzFyKw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOGzFyK84ClYDq"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="transparent_dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</article>
+    </main>
+    
+
+<img src="https://dadul96-github-io.goatcounter.com/count?p=/posts/counting_page_views_on_hugo_papermod_using_goatcounter">
+
+
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://dadul96.github.io/">dadul96 blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

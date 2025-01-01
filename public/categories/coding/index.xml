@@ -6,8 +6,15 @@
     <description>Recent content in Coding on dadul96 blog</description>
     <generator>Hugo -- 0.139.4</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Dec 2024 19:04:00 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jan 2025 15:51:00 +0100</lastBuildDate>
     <atom:link href="https://dadul96.github.io/categories/coding/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to count Page Views on your Hugo PaperMod Blog using GoatCounter</title>
+      <link>https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/</link>
+      <pubDate>Wed, 01 Jan 2025 15:51:00 +0100</pubDate>
+      <guid>https://dadul96.github.io/posts/counting_page_views_on_hugo_papermod_using_goatcounter/</guid>
+      <description>&lt;p&gt;&lt;em&gt;A guide on how to count Page Views on your &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; &lt;a href=&#34;https://github.com/adityatelange/hugo-PaperMod&#34;&gt;PaperMod&lt;/a&gt; blog using &lt;a href=&#34;https://www.goatcounter.com/&#34;&gt;GoatCounter&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>How to add a Comment Section to your Hugo PaperMod Blog using giscus</title>
       <link>https://dadul96.github.io/posts/using_giscus_with_hugo_papermod/</link>
