@@ -6,8 +6,15 @@
     <description>Recent content in Linux on dadul96 blog</description>
     <generator>Hugo -- 0.139.4</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Dec 2024 20:48:00 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jan 2025 19:30:00 +0100</lastBuildDate>
     <atom:link href="https://dadul96.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fixing &#39;lm-sensors&#39; not working with MSI B550 Motherboard</title>
+      <link>https://dadul96.github.io/posts/linux_lm_sensors_with_msi_b550/</link>
+      <pubDate>Sun, 05 Jan 2025 19:30:00 +0100</pubDate>
+      <guid>https://dadul96.github.io/posts/linux_lm_sensors_with_msi_b550/</guid>
+      <description>&lt;p&gt;&lt;em&gt;On my Debian Bookworm system, the &lt;code&gt;sensors&lt;/code&gt;-command does not give me all available hardware info of my MSI MPG B550 Gaming Edge Wifi motherboard. This guide shows how to fix this.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Installing Nvidia Drivers on Debian Bookworm</title>
       <link>https://dadul96.github.io/posts/nvidia_driver_on_debian_bookworm/</link>

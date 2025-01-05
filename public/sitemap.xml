@@ -2,19 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://dadul96.github.io/tags/blog/</loc>
-    <lastmod>2025-01-01T15:51:00+01:00</lastmod>
+    <loc>https://dadul96.github.io/tags/bash/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/categories/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/debian/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/driver/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/posts/linux_lm_sensors_with_msi_b550/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/linux/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/categories/linux/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/posts/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/</loc>
+    <lastmod>2025-01-05T19:30:00+01:00</lastmod>
+  </url><url>
+    <loc>https://dadul96.github.io/tags/blog/</loc>
     <lastmod>2025-01-01T15:51:00+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/tags/coding/</loc>
     <lastmod>2025-01-01T15:51:00+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/categories/coding/</loc>
-    <lastmod>2025-01-01T15:51:00+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/</loc>
     <lastmod>2025-01-01T15:51:00+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/tags/goatcounter/</loc>
@@ -29,28 +53,7 @@
     <loc>https://dadul96.github.io/tags/papermod/</loc>
     <lastmod>2025-01-01T15:51:00+01:00</lastmod>
   </url><url>
-    <loc>https://dadul96.github.io/posts/</loc>
-    <lastmod>2025-01-01T15:51:00+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/</loc>
-    <lastmod>2025-01-01T15:51:00+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/bash/</loc>
-    <lastmod>2024-12-22T20:48:00+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/debian/</loc>
-    <lastmod>2024-12-22T20:48:00+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/driver/</loc>
-    <lastmod>2024-12-22T20:48:00+01:00</lastmod>
-  </url><url>
     <loc>https://dadul96.github.io/posts/nvidia_driver_on_debian_bookworm/</loc>
-    <lastmod>2024-12-22T20:48:00+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/tags/linux/</loc>
-    <lastmod>2024-12-22T20:48:00+01:00</lastmod>
-  </url><url>
-    <loc>https://dadul96.github.io/categories/linux/</loc>
     <lastmod>2024-12-22T20:48:00+01:00</lastmod>
   </url><url>
     <loc>https://dadul96.github.io/tags/nvidia/</loc>
